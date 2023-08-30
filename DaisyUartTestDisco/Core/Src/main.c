@@ -31,6 +31,28 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+typedef struct {
+    uint16_t header;
+} IBC_packet;
+
+#define IBCP_ATTN_IDX 4
+#define IBCP_TTL_IDX 0
+#define IBCP_LEN_IDX 13
+#define IBCP_ID_IDX 8
+#define IBCP_ATTN(packet) ((packet->header & 0x00F0) >> IBCP_ATTN_IDX)
+// #define IBCP_ATTN_MEM(packet) ((IBCP_ATTN(packet) & 0x8) >> 3)
+// #define IBCP_ATTN_CONT(packet) ((IBCP_ATTN(packet) & 0x4) >> 2)
+// #define IBCP_ATTN_REG(packet) ((IBCP_ATTN(packet) & 0x2) >> 1)
+// #define IBCP_ATTN_ALU(packet) ((IBCP_ATTN(packet) & 0x1) >> 0)
+#define IBCP_ATTN_THIS_DEVICE(packet) ((IBCP_ATTN(packet) >> THIS_DEV_ATTN_ID) & 0x1)
+#define IBCP_TTL(packet) ((packet->header & 0x0003) >> IBCP_TTL_IDX)
+#define IBCP_LEN(packet) ((packet->header & 0xE000) >> IBCP_LEN_IDX)
+#define IBCP_ID(packet) ((packet->header & 0x1F00) >> IBCP_ID_IDX)
+
+#define IBCP_PKT(attn, ttl, len, id) (((attn & 0xF) << IBCP_ATTN_IDX) | ((ttl & 0x3) << IBCP_TTL_IDX) | ((len & 0x7) << IBCP_LEN_IDX) | ((id & 0x1F) << IBCP_ID_IDX))
+
+//attn idx - 0-3
+#define THIS_DEV_ATTN_ID 0
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -66,15 +88,30 @@ static uint8_t* data = (uint8_t*)"Hello World\n";
 // }
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
-    HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+    // HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
-    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+    // HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
     if (*buf == '\n') {
         longbuf[count++] = '\n';
-        if (HAL_UART_GetState(&huart1) == HAL_UART_STATE_READY && HAL_UART_Transmit_IT(&huart1, longbuf, count) != HAL_OK) {
-            HAL_GPIO_TogglePin(LED4_GPIO_Port, LED4_Pin);
+        IBC_packet* p = longbuf;
+        if (IBCP_ATTN_THIS_DEVICE(p)) {
+            uint8_t id = IBCP_ID(p);
+            switch (id) {
+            case 1:
+                HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+                break;
+            case 2:
+                HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+                break;
+            }
+        }
+        if (IBCP_TTL(p) > 1) {
+            p->header -= (1 << IBCP_TTL_IDX);
+            if (HAL_UART_GetState(&huart1) == HAL_UART_STATE_READY && HAL_UART_Transmit_IT(&huart1, longbuf, count) != HAL_OK) {
+                HAL_GPIO_TogglePin(LED4_GPIO_Port, LED4_Pin);
+            }
         }
         count = 0;
     }
@@ -287,52 +324,12 @@ void assert_failed(uint8_t* file, uint32_t line) {
 
 
 
-/* To be re added after committing: 
-
-typedef struct {
-    uint16_t header;
-} IBC_packet;
-
-#define IBCP_ATTN_IDX 12
-#define IBCP_ATTN(packet) ((packet->header & 0xF000) >> IBCP_ATTN_IDX)
-#define IBCP_ATTN_MEM(packet) ((IBCP_ATTN(packet) & 0x8) >> 3)
-#define IBCP_ATTN_CONT(packet) ((IBCP_ATTN(packet) & 0x4) >> 2)
-#define IBCP_ATTN_REG(packet) ((IBCP_ATTN(packet) & 0x2) >> 1)
-#define IBCP_ATTN_ALU(packet) ((IBCP_ATTN(packet) & 0x1) >> 0)
-
-#define IBCP_TTL_IDX 8
-#define IBCP_TTL(packet) ((packet->header & 0x0300) >> IBCP_TTL_IDX)
-#define IBCP_LEN(packet) ((packet->header & 0x00E0) >> 5)
-#define IBCP_ID(packet) ((packet->header & 0x001F))
-
-#define IBCP_PKT(attn, ttl, len, id) (((attn & 0xF) << IBCP_ATTN_IDX) | ((ttl & 0x3) << IBCP_TTL_IDX) | ((len & 0x7) << 5) | (id & 0x1F))
-
-//one hot attn - 8, 4, 2, or 1, based on macros above
-#define THIS_DEV_ATTN_ID 1
+/* To be re added after committing:
 
 
 
 
-if (*buf == '\n') {
-        longbuf[count++] = '\n';
-        IBC_packet* p = longbuf;
-        if (IBCP_ATTN(p) == THIS_DEV_ATTN_ID) {
-            uint8_t id = IBCP_ID(p);
-            switch (id) {
-            case 1:
-                HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-                break;
-            case 2:
-                HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-                break;
-            }
-        }
-        if (IBCP_TTL(p) > 1) {
-            p->header -= (1 << IBCP_TTL_IDX);
-            if (HAL_UART_GetState(&huart1) == HAL_UART_STATE_READY && HAL_UART_Transmit_IT(&huart1, longbuf, count) != HAL_OK) {
-                HAL_GPIO_TogglePin(LED4_GPIO_Port, LED4_Pin);
-            }
-        }
-        count = 0;
-    }
+
+
+
 */
