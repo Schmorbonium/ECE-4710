@@ -51,9 +51,9 @@ def toggleGMsg(addr:list[int]) -> list[int]:
     return hdr
 
 def sendMsg(msg:list[int],ser:serial.SerialBase):
-    # for i in msg :
-        
-    ser.write(bytes(msg))
+    raw = bytes(msg)
+    ser.write(raw)
+    print(F"sending:0x{raw.hex()}")
 
 
 activePort = findActiveSerialPort()
@@ -61,23 +61,15 @@ with serial.Serial(activePort, 115200, timeout=1) as ser:
     while True:
         msg:list[int] = toggleBMsg([0,1,2,3])
         sendMsg(msg,ser)
-        print(f'Sent {msg[0]:02X}{msg[1]:02X}{msg[2]:02X}')
-        # print(ser.readall())
         time.sleep(1)
         msg:list[int] = toggleGMsg([0,1])
         sendMsg(msg,ser)
-        print(f'Sent {msg[0]:02X}{msg[1]:02X}{msg[2]:02X}')
-        # print(ser.readline())
         time.sleep(1)
         msg:list[int] = toggleOMsg([0,1])
         sendMsg(msg,ser)
-        print(f'Sent {msg[0]:02X}{msg[1]:02X}{msg[2]:02X}')
-        # print(ser.readall())
         time.sleep(1)
         msg:list[int] = toggleRMsg([0,1])
         sendMsg(msg,ser)
-        print(f'Sent {msg[0]:02X}{msg[1]:02X}{msg[2]:02X}')
-        # print(ser.readall())
         time.sleep(1)
 
 
