@@ -32,7 +32,7 @@ def getHeader(addr:list[int],ttl:int,data_len:int,id:int) -> list[int]:
     hdr2 |= (data_len & 0x7) << 5 
     hdr2 |= (id & 0x1F)
 
-    return [hdr1,hdr2]
+    return [hdr1,hdr2,0x0A]
 
 def toggleBMsg(addr:list[int]) -> list[int]:
     hdr:list[int] = getHeader(addr,3,0,2)
@@ -51,9 +51,9 @@ def toggleGMsg(addr:list[int]) -> list[int]:
     return hdr
 
 def sendMsg(msg:list[int],ser:serial.SerialBase):
-    for i in msg :
+    # for i in msg :
         
-        ser.write(bytes(i & 0xff))
+    ser.write(bytes(msg))
 
 
 activePort = findActiveSerialPort()
@@ -61,19 +61,23 @@ with serial.Serial(activePort, 115200, timeout=1) as ser:
     while True:
         msg:list[int] = toggleBMsg([0,1,2,3])
         sendMsg(msg,ser)
-        print(f'Sent {msg[0]:02X}{msg[1]:02X}')
+        print(f'Sent {msg[0]:02X}{msg[1]:02X}{msg[2]:02X}')
+        # print(ser.readall())
         time.sleep(1)
-        msg:list[int] = toggleGMsg([2])
+        msg:list[int] = toggleGMsg([0,1])
         sendMsg(msg,ser)
-        print(f'Sent {msg}')
+        print(f'Sent {msg[0]:02X}{msg[1]:02X}{msg[2]:02X}')
+        # print(ser.readline())
         time.sleep(1)
-        msg:list[int] = toggleOMsg([1,2])
+        msg:list[int] = toggleOMsg([0,1])
         sendMsg(msg,ser)
-        print(f'Sent {msg}')
+        print(f'Sent {msg[0]:02X}{msg[1]:02X}{msg[2]:02X}')
+        # print(ser.readall())
         time.sleep(1)
-        msg:list[int] = toggleRMsg([2])
+        msg:list[int] = toggleRMsg([0,1])
         sendMsg(msg,ser)
-        print(f'Sent {msg}')
+        print(f'Sent {msg[0]:02X}{msg[1]:02X}{msg[2]:02X}')
+        # print(ser.readall())
         time.sleep(1)
 
 
