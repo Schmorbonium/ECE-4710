@@ -2,18 +2,7 @@
   <link rel="stylesheet" href="MDstyle.css">
 </head>
 
-<!-- <script src="tableBuilder.js">
-    Hello()
-</script> -->
-
-
-<p id="demo"></p>
-
-<script>
-
-document.getElementById("demo").innerHTML = "Hello JavaScript!";
-
-</script> 
+<iframe src="ComputerSideIf/test.html" frameborder="0" width="100%"></iframe>
 
 InterBoard Header Byte (Words)
 <table>
