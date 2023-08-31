@@ -31,27 +31,33 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+typedef uint16_t IbcRawHeader;
+
 typedef struct {
-    uint16_t header;
-} IBC_packet;
+    uint8_t attn;
+    uint8_t ttl;
+    uint8_t len;
+    uint8_t id;
+    union {
+        uint8_t one_byte;
+        uint16_t two_byte;
+        uint32_t four_byte;
+    } data;
+} IbcPacket;
 
 #define IBCP_ATTN_IDX 4
 #define IBCP_TTL_IDX 0
 #define IBCP_LEN_IDX 13
 #define IBCP_ID_IDX 8
-#define IBCP_ATTN(packet) ((packet->header & 0x00F0) >> IBCP_ATTN_IDX)
-// #define IBCP_ATTN_MEM(packet) ((IBCP_ATTN(packet) & 0x8) >> 3)
-// #define IBCP_ATTN_CONT(packet) ((IBCP_ATTN(packet) & 0x4) >> 2)
-// #define IBCP_ATTN_REG(packet) ((IBCP_ATTN(packet) & 0x2) >> 1)
-// #define IBCP_ATTN_ALU(packet) ((IBCP_ATTN(packet) & 0x1) >> 0)
+#define IBCP_ATTN(packet) ((*packet & 0x00F0) >> IBCP_ATTN_IDX)
 #define IBCP_ATTN_THIS_DEVICE(packet) ((IBCP_ATTN(packet) >> THIS_DEV_ATTN_ID) & 0x1)
-#define IBCP_TTL(packet) ((packet->header & 0x0003) >> IBCP_TTL_IDX)
-#define IBCP_LEN(packet) ((packet->header & 0xE000) >> IBCP_LEN_IDX)
-#define IBCP_ID(packet) ((packet->header & 0x1F00) >> IBCP_ID_IDX)
+#define IBCP_TTL(packet) ((*packet & 0x0003) >> IBCP_TTL_IDX)
+#define IBCP_LEN(packet) ((*packet & 0xE000) >> IBCP_LEN_IDX)
+#define IBCP_ID(packet) ((*packet & 0x1F00) >> IBCP_ID_IDX)
 
 #define IBCP_PKT(attn, ttl, len, id) (((attn & 0xF) << IBCP_ATTN_IDX) | ((ttl & 0x3) << IBCP_TTL_IDX) | ((len & 0x7) << IBCP_LEN_IDX) | ((id & 0x1F) << IBCP_ID_IDX))
 
-//attn idx - 0-3
+//attn idx: 0-3
 #define THIS_DEV_ATTN_ID 0
 /* USER CODE END PD */
 
@@ -78,10 +84,9 @@ static void MX_USART1_UART_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-static uint8_t buf[20];
+static uint8_t incoming_byte[2];
 static uint8_t longbuf[100];
 uint32_t count = 0;
-static uint8_t* data = (uint8_t*)"Hello World\n";
 
 // void USART1_IRQHandler() {
 //     HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
@@ -93,9 +98,9 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
     // HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-    if (*buf == '\n') {
+    if (*incoming_byte == '\n') {
         longbuf[count++] = '\n';
-        IBC_packet* p = longbuf;
+        IbcRawHeader* p = (IbcRawHeader*)longbuf;
         if (IBCP_ATTN_THIS_DEVICE(p)) {
             uint8_t id = IBCP_ID(p);
             switch (id) {
@@ -108,7 +113,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
             }
         }
         if (IBCP_TTL(p) > 1) {
-            p->header -= (1 << IBCP_TTL_IDX);
+            *p -= (1 << IBCP_TTL_IDX);
             if (HAL_UART_GetState(&huart1) == HAL_UART_STATE_READY && HAL_UART_Transmit_IT(&huart1, longbuf, count) != HAL_OK) {
                 HAL_GPIO_TogglePin(LED4_GPIO_Port, LED4_Pin);
             }
@@ -116,9 +121,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
         count = 0;
     }
     else {
-        longbuf[count++] = *buf;
+        longbuf[count++] = *incoming_byte;
     }
-    HAL_UART_Receive_IT(&huart1, buf, 1);
+    HAL_UART_Receive_IT(&huart1, incoming_byte, 1);
 }
 
 /* USER CODE END 0 */
@@ -165,7 +170,7 @@ int main(void) {
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
-    HAL_UART_Receive_IT(&huart1, buf, 1);
+    HAL_UART_Receive_IT(&huart1, incoming_byte, 1);
     uint32_t lastTick = HAL_GetTick();
     while (1) {
         // HAL_UART_TxCpltCallback();
