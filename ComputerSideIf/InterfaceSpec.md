@@ -1,31 +1,4 @@
-<style>
-:root {
-    --dark:#101010;
-    --offDark:#282828;
-    --darkContrast:aqua;
-}
-
-body {
-    background-color: var(--dark);
-}
-
-table, th, td {
-  border: 1px solid var(--darkContrast);
-}
-tr:nth-child(even) {
-  background-color: var(--offDark);
-  color: white;
-}
-tr:nth-child(odd) {
-  background-color: var(--Dark);
-  color: white;
-}
-th:nth-child(even) {
-  background-color: var(--offDark);
-  color: white;
-}
-</style>
-<iframe src="ComputerSideIf/test.html" frameborder="0" width="100%"></iframe>
+<link rel="stylesheet" href="MDstyle.css">
 
 InterBoard Header Byte (Words)
 <table>
