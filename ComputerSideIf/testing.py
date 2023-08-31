@@ -2,6 +2,19 @@
 import serial
 import time
 
+def findActiveSerialPort():
+    available_ports = list(serial.tools.list_ports.comports())
+    
+    for port_info in available_ports:
+        try:
+            # Try to open the port and immediately close it to check if it's available
+            port = serial.Serial(port=port_info.device, timeout=1)
+            port.close()
+            return port_info.device
+        except (serial.SerialException, OSError):
+            pass
+    
+    return None  # No active serial port found
 
 
 def getHeader(addr:list[int],ttl:int,data_len:int,id:int) -> list[int]:
@@ -40,7 +53,9 @@ def sendMsg(msg:list[int],ser:serial.SerialBase):
     for i in msg :
         ser.write(i & 0xff)
 
-with serial.Serial('', 115200, timeout=1) as ser:
+
+activePort = findActiveSerialPort()
+with serial.Serial(activePort, 115200, timeout=1) as ser:
     while True:
         msg:list[int] = toggleBMsg([1])
         sendMsg(msg,ser)
