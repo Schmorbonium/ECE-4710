@@ -97,22 +97,22 @@ IbcPacket* checkForPacket(uint8_t* buffer, uint32_t buf_len) {
     newPacket->id = IBCP_ID(hp);
     switch (newPacket->len) {
     case 1:
-        newPacket->data[0] = buffer[3];
+        newPacket->data[0] = buffer[2];
         break;
     case 2:
-        newPacket->data[0] = buffer[4];
-        newPacket->data[1] = buffer[3];
+        newPacket->data[0] = buffer[3];
+        newPacket->data[1] = buffer[2];
         break;
     case 3:
+        newPacket->data[0] = buffer[4];
+        newPacket->data[1] = buffer[3];
+        newPacket->data[2] = buffer[2];
+        break;
+    case 4:
         newPacket->data[0] = buffer[5];
         newPacket->data[1] = buffer[4];
         newPacket->data[2] = buffer[3];
-        break;
-    case 4:
-        newPacket->data[0] = buffer[6];
-        newPacket->data[1] = buffer[5];
-        newPacket->data[2] = buffer[4];
-        newPacket->data[3] = buffer[3];
+        newPacket->data[3] = buffer[2];
         break;
     }
 
