@@ -1,0 +1,77 @@
+<html>
+
+<head>
+    <title>Docs</title>
+    <link rel="stylesheet" href="style/MDstyle.css">
+    <!-- Include Showdown library from CDN -->
+</head>
+
+<body>
+    <div  class="sidebar">
+        <ul id="TheSideBar">
+            <!-- <li id="Home_Button" onclick="setMD('markdown/InterfaceSpec.md')"><a>InterfaceSpec</a></li>
+            <li id="About_Button" onclick="setMD('markdown/PacketDocs.md')"><a>PacketDocs</a></li>
+            <li id="Services_Button" onclick="setMD('markdown/Test.md')"><a>Services</a></li> -->
+        </ul>
+    </div>
+
+    <div id="markdownContent" class="mainPage"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <script src="script/markdown.js"></script>
+    <script src="script/packetDoc.js"></script>
+    <script>
+        var activeItem
+        function newSidebarItem(Text, type, file) {
+            const item = document.createElement('li')
+            if(type == "markDown"){
+                item.addEventListener("click", function() {
+                    setMD(`markdown/${file}`)
+                    if(activeItem){
+                        activeItem.classList.remove("highlight")
+                    }
+                    activeItem = item
+                    item.classList.add("highlight")
+                })
+                const test = document.createElement('a')
+                item.appendChild(test)
+                test.innerText = Text
+                if(!activeItem){
+                    activeItem = item
+                    item.classList.add("highlight")
+                    setMD(`markdown/${file}`)
+                }
+            }else{
+            }
+            return item
+
+        }
+        async function buildSidebar() {
+            const jsonFilePath = 'sideBar.json'
+            const sideBar = document.getElementById('TheSideBar')
+            try {
+                var response = await fetch(jsonFilePath)
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const json = await response.json();
+                json.forEach(element => {
+                    sideBar.appendChild(newSidebarItem(element.text, element.type, element.ref))
+                });
+            } catch (error) {
+                console.error("Error loading JSON:", error);
+            }
+        }
+
+        async function setMD(markDownFile) {
+            await setActiveMarkdown(markDownFile);
+            await InsertPacketDocs();
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            buildSidebar()
+        });
+    </script>
+</body>
+
+</html>
