@@ -6,11 +6,13 @@
   --textColor: white;
   --sideWidth: 150px;
 }
+
 .highlight {
   color: var(--darkContrast);
   border: 1px solid var(--darkContrast);
   background-color: var(--midDark);
 }
+
 .collapsible {
   cursor: pointer;
   width: 100%;
@@ -36,9 +38,13 @@ body {
 table,
 th,
 td {
+  border-collapse: collapse;
   border: 1px solid var(--darkContrast);
 }
 
+th {
+  min-width: 20px;
+}
 tr:nth-child(even) {
   background-color: var(--offDark);
   color: var(--textColor);
@@ -87,4 +93,14 @@ th:nth-child(even) {
 
 .nested {
   margin-left: 20px;
+}
+
+a:hover {
+  color: var(--darkContrast);
+  text-decoration: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
 }

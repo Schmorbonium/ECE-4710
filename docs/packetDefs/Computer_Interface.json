@@ -4,57 +4,53 @@
     "fields":[
         {
             "name":"Operation",
-            "fieldType":"Enum",
+            "fieldType":"pktEnum",
             "bits":8,
-            "def":" Defines What Operation the packet is requesting",
+            "def":"This is the Packet Form for all communication between the computer and the IO/Memory Board",
             "options":[
                 {
                     "value":"0x01",
-                    "result":"Sender:Computer  --Instructs MicroController to Reset state to default"
+                    "ResultingPacketType":"ResetPacket"
                 },
                 {
                     "value":"0x02",
-                    "result":"SetMem:Dual  --Sets A given memory Address to a given Value (setting following addresses if provided). Returns error if invalid address outside of purview"
+                    "ResultingPacketType":"SetMemory"
                 },
                 {
                     "value":"0x03",
-                    "result":"Sender:Dual  --Gets the Memory at a given address and given length Entire range must be valid memory"
+                    "ResultingPacketType":"GetMemory"
                 },
                 {
                     "value":"0x11",
-                    "result":"Sender:Dual  --"
+                    "ResultingPacketType":"dbSetReg"
                 },
                 {
                     "value":"0x12",
-                    "result":"Sender:Dual  --"
+                    "ResultingPacketType":"dbGetReg"
                 },
                 {
                     "value":"0x13",
-                    "result":"Sender:Dual  --"
+                    "ResultingPacketType":"dbGetFlags"
                 },
                 {
                     "value":"0x14",
-                    "result":"Sender:Dual  --"
+                    "ResultingPacketType":"dbSetPC"
                 },
                 {
                     "value":"0x15",
-                    "result":"Sender:Dual  --"
+                    "ResultingPacketType":"dbPause"
                 },
                 {
                     "value":"0x16",
-                    "result":"Sender:Dual  --"
+                    "ResultingPacketType":"dbStep"
                 },
                 {
                     "value":"0x17",
-                    "result":"Sender:Dual  --"
+                    "ResultingPacketType":"dbNewBP"
                 },
                 {
                     "value":"0x18",
-                    "result":"Sender:Dual  --"
-                },
-                {
-                    "value":"8b1xxx_xxxx",
-                    "result":"Sender:Dual  --"
+                    "ResultingPacketType":"dbStep"
                 }
             ]
         },
@@ -66,18 +62,17 @@
         },
         {
             "name":"Unused",
-            "fieldType":"Unused",
+            "fieldType":"unused",
             "bits":8
         },
         {
             "name":"PacketFlags",
             "fieldType":"SuperField",
             "bits":8
-        },
-        {
-            "name":"Data",
-            "fieldType":"Payload",
-            "bits":-1
         }
+    ],
+    "childPackets":
+    [
+
     ]
 }
