@@ -1,0 +1,83 @@
+{
+    "name":"Computer Interface Packet",
+    "wordSize":32,
+    "fields":[
+        {
+            "name":"Operation",
+            "fieldType":"Enum",
+            "bits":8,
+            "def":" Defines What Operation the packet is requesting",
+            "options":[
+                {
+                    "value":"0x01",
+                    "result":"Sender:Computer  --Instructs MicroController to Reset state to default"
+                },
+                {
+                    "value":"0x02",
+                    "result":"SetMem:Dual  --Sets A given memory Address to a given Value (setting following addresses if provided). Returns error if invalid address outside of purview"
+                },
+                {
+                    "value":"0x03",
+                    "result":"Sender:Dual  --Gets the Memory at a given address and given length Entire range must be valid memory"
+                },
+                {
+                    "value":"0x11",
+                    "result":"Sender:Dual  --"
+                },
+                {
+                    "value":"0x12",
+                    "result":"Sender:Dual  --"
+                },
+                {
+                    "value":"0x13",
+                    "result":"Sender:Dual  --"
+                },
+                {
+                    "value":"0x14",
+                    "result":"Sender:Dual  --"
+                },
+                {
+                    "value":"0x15",
+                    "result":"Sender:Dual  --"
+                },
+                {
+                    "value":"0x16",
+                    "result":"Sender:Dual  --"
+                },
+                {
+                    "value":"0x17",
+                    "result":"Sender:Dual  --"
+                },
+                {
+                    "value":"0x18",
+                    "result":"Sender:Dual  --"
+                },
+                {
+                    "value":"8b1xxx_xxxx",
+                    "result":"Sender:Dual  --"
+                }
+            ]
+        },
+        {
+            "name":"Data Size",
+            "fieldType":"UNum",
+            "bits":8,
+            "def":"This is the number of bytes of data to expect following this header"
+        },
+        {
+            "name":"Unused",
+            "fieldType":"Unused",
+            "bits":8
+        },
+        {
+            "name":"PacketFlags",
+            "fieldType":"SuperField",
+            "bits":8
+        },
+        {
+            "name":"Data",
+            "fieldType":"Payload",
+            "bits":-1
+        }
+    ]
+}

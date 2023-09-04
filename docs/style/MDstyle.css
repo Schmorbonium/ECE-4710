@@ -1,0 +1,90 @@
+:root {
+  --dark: #101010;
+  --offDark: #383838;
+  --midDark: #888888;
+  --darkContrast: aqua;
+  --textColor: white;
+  --sideWidth: 150px;
+}
+.highlight {
+  color: var(--darkContrast);
+  border: 1px solid var(--darkContrast);
+  background-color: var(--midDark);
+}
+.collapsible {
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 18px;
+  transition: 0.4s;
+}
+
+hr {
+  border: 1px solid var(--darkContrast)
+}
+
+body {
+  background-color: var(--dark);
+  color: var(--textColor);
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+table,
+th,
+td {
+  border: 1px solid var(--darkContrast);
+}
+
+tr:nth-child(even) {
+  background-color: var(--offDark);
+  color: var(--textColor);
+}
+
+tr:nth-child(odd) {
+  background-color: var(--Dark);
+  color: var(--textColor);
+}
+
+th:nth-child(even) {
+  background-color: var(--offDark);
+  color: var(--textColor);
+}
+
+.sidebar {
+  height: 100%;
+  width: var(--sideWidth);
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--offDark);
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  color: white;
+}
+
+.sidebar li {
+  padding: 10px;
+}
+
+.sidebar a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.mainPage {
+  margin-left: var(--sideWidth);
+  padding: 20px;
+}
+
+.nested {
+  margin-left: 20px;
+}
