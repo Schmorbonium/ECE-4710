@@ -2,17 +2,17 @@
     {
         "text":"General",
         "type":"markDown",
-        "ref":"Overview.md"
+        "ref":"general.md"
     },
     {
         "text":"Computer Interface",
         "type":"markDown",
-        "ref":"PacketDocs.md"
+        "ref":"computerInterface.md"
     },
     {
         "text":"Intra-Board Interface",
         "type":"markDown",
-        "ref":"InterfaceSpec.md"
+        "ref":"intraBoardDoc.md"
     },
     {
         "text":"Test",
