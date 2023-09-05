@@ -56,7 +56,13 @@
                 "name": "Message Command ID",
                 "fieldType": "enum",
                 "bits": 5,
-                "def": "This is the ID if the command that is being executed"
+                "def": "This is the ID if the command that is being executed",
+                "options": [
+                    {
+                        "value": "0x01",
+                        "result": "BlueLED"
+                    }
+                ]
             }
         ]
     }

@@ -1,78 +1,87 @@
 {
-    "name":"Computer Interface Packet",
-    "wordSize":32,
-    "fields":[
-        {
-            "name":"Operation",
-            "fieldType":"pktEnum",
-            "bits":8,
-            "def":"This is the Packet Form for all communication between the computer and the IO/Memory Board",
-            "options":[
-                {
-                    "value":"0x01",
-                    "ResultingPacketType":"ResetPacket"
-                },
-                {
-                    "value":"0x02",
-                    "ResultingPacketType":"SetMemory"
-                },
-                {
-                    "value":"0x03",
-                    "ResultingPacketType":"GetMemory"
-                },
-                {
-                    "value":"0x11",
-                    "ResultingPacketType":"dbSetReg"
-                },
-                {
-                    "value":"0x12",
-                    "ResultingPacketType":"dbGetReg"
-                },
-                {
-                    "value":"0x13",
-                    "ResultingPacketType":"dbGetFlags"
-                },
-                {
-                    "value":"0x14",
-                    "ResultingPacketType":"dbSetPC"
-                },
-                {
-                    "value":"0x15",
-                    "ResultingPacketType":"dbPause"
-                },
-                {
-                    "value":"0x16",
-                    "ResultingPacketType":"dbStep"
-                },
-                {
-                    "value":"0x17",
-                    "ResultingPacketType":"dbNewBP"
-                },
-                {
-                    "value":"0x18",
-                    "ResultingPacketType":"dbStep"
-                }
-            ]
-        },
-        {
-            "name":"Data Size",
-            "fieldType":"UNum",
-            "bits":8,
-            "def":"This is the number of bytes of data to expect following this header"
-        },
-        {
-            "name":"Unused",
-            "fieldType":"unused",
-            "bits":8
-        },
-        {
-            "name":"PacketFlags",
-            "fieldType":"SuperField",
-            "bits":8
-        }
-    ],
-    "childPackets":
-    [
-
-    ]
+    "header": {
+        "name": "Computer Interface Packet",
+        "wordSize": 32,
+        "fields": [
+            {
+                "name": "Operation",
+                "fieldType": "pktEnum",
+                "bits": 8,
+                "def": "This is the Packet Form for all communication between the computer and the IO/Memory Board",
+                "options": [
+                    {
+                        "value": "0x01",
+                        "ResultingPacketType": "ResetPacket"
+                    },
+                    {
+                        "value": "0x02",
+                        "ResultingPacketType": "SetMemory"
+                    },
+                    {
+                        "value": "0x03",
+                        "ResultingPacketType": "GetMemory"
+                    },
+                    {
+                        "value": "0x11",
+                        "ResultingPacketType": "dbSetReg"
+                    },
+                    {
+                        "value": "0x12",
+                        "ResultingPacketType": "dbGetReg"
+                    },
+                    {
+                        "value": "0x13",
+                        "ResultingPacketType": "dbGetFlags"
+                    },
+                    {
+                        "value": "0x14",
+                        "ResultingPacketType": "dbSetPC"
+                    },
+                    {
+                        "value": "0x15",
+                        "ResultingPacketType": "dbPause"
+                    },
+                    {
+                        "value": "0x16",
+                        "ResultingPacketType": "dbStep"
+                    },
+                    {
+                        "value": "0x17",
+                        "ResultingPacketType": "dbNewBP"
+                    },
+                    {
+                        "value": "0x18",
+                        "ResultingPacketType": "dbStep"
+                    }
+                ]
+            },
+            {
+                "name": "Data Size",
+                "fieldType": "UNum",
+                "bits": 8,
+                "def": "This is the number of bytes of data to expect following this header"
+            },
+            {
+                "name": "Unused",
+                "fieldType": "unused",
+                "bits": 8
+            },
+            {
+                "name": "PacketFlags",
+                "fieldType": "SuperField",
+                "bits": 8
+            }
+        ]
+    },
+    "ResetPacket": {
+        "name": "Reset Packet",
+        "wordSize": 32,
+        "fields": [
+            {
+                "name": "Header",
+                "fieldType": "unused",
+                "bits": 32
+            }
+        ]
+    }
 }

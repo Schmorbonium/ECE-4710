@@ -205,13 +205,16 @@ async function InsertPacketDoc(packDoc) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        const json = await response.json();
+        const AllJson = await response.json();
         const t = document.createElement('div')
-        var subPacket = json.dataset
-        console.log(subPacket)
+        var subPacket = packDoc.dataset.sub_pkt
+        // console.log(subPacket)
         if(!subPacket){
             subPacket = "header"
         }
+        // console.log(AllJson)
+        // console.log(AllJson[subPacket])
+        const json = AllJson[subPacket]
         const label = document.createElement('h2')
         label.innerText = json.name
 
@@ -233,7 +236,7 @@ async function InsertPacketDocs() {
     var packetDocs = document.getElementsByClassName(packetClass);
     for (var i = 0; i < packetDocs.length; i++) {
         var packetDoc = packetDocs[i];
-        console.log(packetDoc)
+        // console.log(packetDoc)
         await InsertPacketDoc(packetDoc)
     }
 }
