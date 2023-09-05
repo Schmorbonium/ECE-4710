@@ -39,19 +39,27 @@
                     },
                     {
                         "value": "0x15",
-                        "ResultingPacketType": "dbPause"
+                        "ResultingPacketType": "dbGetPC"
                     },
                     {
                         "value": "0x16",
-                        "ResultingPacketType": "dbStep"
+                        "ResultingPacketType": "dbPause"
                     },
                     {
                         "value": "0x17",
-                        "ResultingPacketType": "dbNewBP"
+                        "ResultingPacketType": "dbStep"
                     },
                     {
                         "value": "0x18",
-                        "ResultingPacketType": "dbStep"
+                        "ResultingPacketType": "bdGetBP"
+                    },
+                    {
+                        "value": "0x19",
+                        "ResultingPacketType": "dbToggleBP"
+                    },
+                    {
+                        "value":"0x1A",
+                        "ResultingPacketType": "ToggleDebug"
                     }
                 ]
             },
