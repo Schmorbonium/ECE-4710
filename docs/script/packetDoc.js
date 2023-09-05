@@ -1,99 +1,200 @@
 const packetClass = "PacketDoc"
 var collapsibleCount = 0
 
-function generateTable(jsonData) {
-    var tableHTML = `<table><thead><tr><th colspan=${jsonData.wordSize}>${jsonData.name}</th></tr>`;
+function createPacketTableHeader(name, width) {
+    const tableHeader = document.createElement('thead')
 
-    tableHTML += "<tr>"
-    for (let i = 0; i < jsonData.wordSize; i++) {
-        tableHTML += `<th>${jsonData.wordSize - 1 - i}</th>`
+    const labelRow = document.createElement('tr')
+    tableHeader.appendChild(labelRow)
+    const labelCol = document.createElement('th')
+    labelRow.appendChild(labelCol)
+    labelCol.innerText = name
+    labelCol.colSpan = width
+
+    const bitRow = document.createElement('tr')
+    for (let i = 0; i < width; i++) {
+        const bit = document.createElement('th')
+        bit.classList.add('bitBox')
+        bit.innerText = width - 1 - i
+        bitRow.appendChild(bit)
     }
-    tableHTML += "</tr></thead><tbody><tr>"
+    tableHeader.appendChild(bitRow)
 
-    var cnt = 0
-    jsonData["fields"].forEach(element => {
-        if (cnt == jsonData.wordSize) {
-            cnt = 0
-            tableHTML += "</tr><tr>"
-        }
-        if (cnt + element.bits <= jsonData.wordSize) {
-            cnt += element.bits
-            tableHTML += `<td colspan=${element.bits}>${element.name}</td>`;
-            if (cnt == jsonData.wordSize) {
-            }
-        }
-    });
-    tableHTML += "</tr></tbody></table>";
-    return tableHTML
+    return tableHeader
 }
 
-function generateOptionsTable(options){
-    var table = "<table><thead><tr><th>Value</th><th>Description</th></tr></thead>"
-    options.forEach(option => {
-        table+=`<tr><td>${option.value}</td><td>${option.result}</td></tr>`
+function createPacketTableBody(jsonData, width) {
+    const body = document.createElement('tbody')
+    var curRow = document.createElement('tr')
+    body.appendChild(curRow)
+    var cnt = 0
+    if (!jsonData["fields"]) {
+        return body
+    }
+
+    jsonData["fields"].forEach(element => {
+        if (cnt == width) {
+            cnt = 0
+            curRow = document.createElement('tr')
+            body.appendChild(curRow)
+        }
+        if (cnt + element.bits <= width) {
+            cnt += element.bits
+            const cell = document.createElement('td')
+            cell.colSpan = element.bits
+            cell.innerText = element.name
+            curRow.appendChild(cell)
+        }
     });
-    table += "</table>"
+    return body
+}
+
+function generateTable(jsonData) {
+    const table = document.createElement('table')
+    table.appendChild(
+        createPacketTableHeader(jsonData.name, jsonData.wordSize))
+    table.appendChild(
+        createPacketTableBody(jsonData, jsonData.wordSize))
     return table
 }
 
-function subFieldDes(jsonData){
-    des = ""
-    jsonData.subFields.forEach(element => {
-        des += getFieldDes(element)
-    });
-    return des
-}
-
-function Buildtable(Title,colCnt,){
-
-}
-
-function subfieldLayout(jsonData){
-
-    return ""
-}
-
-function subFieldsDoc(jsonData){
-    // console.log(`${subfieldLayout(jsonData)}${subFieldDes(jsonData)}`)
-    return `${subfieldLayout(jsonData)}${subFieldDes(jsonData)}`
-}
-
-function getFieldDes(jsonData){
-    var des = ""
-    if(jsonData.def){
-        des += `<h3>${jsonData.name}</h3>`
-        des += `<p class="nested">${jsonData.def}</p>`
-        if(jsonData.options){
-            des += generateOptionsTable(jsonData.options)
-        }
-        if(jsonData.fieldType == "SuperField"){
-            des += subFieldsDoc(jsonData)
-        }
+function generatePktEnumTable(options) {
+    const table = document.createElement('table')
+    {
+        const tHead = document.createElement('thead')
+        table.appendChild(tHead)
+        const r = tHead.insertRow()
+        r.insertCell().innerText = "Value"
+        r.insertCell().innerText = "Packet"
     }
-    return `<div class="nested">${des}</div>`
+    {
+        const tbody = document.createElement('tbody')
+        table.appendChild(tbody)
+        options.forEach(option => {
+            const r = tbody.insertRow()
+            r.insertCell().innerText = option.value
+            const linkedPacket = document.createElement('a')
+            linkedPacket.href = `#${option.ResultingPacketType}`
+            linkedPacket.innerText = option.ResultingPacketType
+            r.insertCell().appendChild(linkedPacket) 
+        });
+    }
+    return table
+}
+
+function generateEnumTable(options) {
+    const table = document.createElement('table')
+    {
+        const tHead = document.createElement('thead')
+        table.appendChild(tHead)
+        const r = tHead.insertRow()
+        r.insertCell().innerText = "Value"
+        r.insertCell().innerText = "Description"
+    }
+    {
+        const tbody = document.createElement('tbody')
+        table.appendChild(tbody)
+        options.forEach(option => {
+            const r = tbody.insertRow()
+            r.insertCell().innerText = option.value
+            r.insertCell().innerText = option.result
+        });
+    }
+    return table
+}
+
+function subFieldDes(jsonData) {
+    div = document.createElement('div')
+    if(!jsonData.fields){
+        return div
+    }
+    jsonData.fields.forEach(element => {
+        div.appendChild(getFieldDes(element))
+    });
+    return div
 }
 
 
-function generateDescriptions(jsonData){
-    var des = "<div>"
+function subfieldLayout(jsonData) {
+    const table = document.createElement('table')
+
+    const tableHeader = createPacketTableHeader(jsonData.name, jsonData.bits)
+    table.appendChild(tableHeader)
+
+    const tableBody = createPacketTableBody(jsonData, jsonData.bits)
+    table.appendChild(tableBody)
+
+    return table
+}
+
+function subFieldsDoc(jsonData) {
+    const div = document.createElement('div')
+    div.appendChild(
+        subfieldLayout(jsonData)
+    )
+    div.appendChild(
+        subFieldDes(jsonData)
+    )
+    return div
+}
+
+function getFieldDes(jsonData) {
+    var div = document.createElement('div')
+    div.classList.add('nested')
+    
+    if(jsonData.fieldType == "unused"){
+        return div
+    }
+    const header = document.createElement('h3')
+    div.appendChild(header)
+    header.innerText = jsonData.name
+    
+    const content = document.createElement('div')
+    div.appendChild(content)
+    content.classList.add('nested')
+    
+    if (jsonData.def) {
+        const definition = document.createElement('p')
+        definition.innerText = jsonData.def
+        content.appendChild(definition)
+    }
+
+    if (jsonData.fieldType == 'enum') {
+        content.appendChild(generateEnumTable(jsonData.options))
+    }
+
+    if (jsonData.fieldType == 'pktEnum') {
+        content.appendChild(generatePktEnumTable(jsonData.options))
+    }
+
+    if (jsonData.fieldType == "SuperField") {
+        content.appendChild(subFieldsDoc(jsonData))
+    }
+    div = createCollapsibleDiv(header, content)
+    return div
+}
+
+
+function generateDescriptions(jsonData) {
+    const des = document.createElement('div')
     jsonData["fields"].forEach(element => {
-        des += getFieldDes(element)
+        des.appendChild(getFieldDes(element))
     });
-    des += "</div>"
     return des
 }
 
-function createCollapsibleDiv(label,content) {
+function createCollapsibleDiv(label, content) {
     const div = document.createElement('div')
     label.classList.add("collapsible")
-    label.addEventListener('click', function() {
+    label.addEventListener('click', function () {
         if (content.style.display === 'block') {
             content.style.display = 'none';
         } else {
             content.style.display = 'block';
         }
     })
-    div.append(label,content)
+    content.style.display = 'none'
+    div.append(label, content)
     return div
 }
 
@@ -104,28 +205,30 @@ async function InsertPacketDoc(packDoc) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        const json = await response.json();
-
+        const AllJson = await response.json();
+        const t = document.createElement('div')
+        var subPacket = packDoc.dataset.sub_pkt
+        // console.log(subPacket)
+        if(!subPacket){
+            subPacket = "header"
+        }
+        // console.log(AllJson)
+        // console.log(AllJson[subPacket])
+        const json = AllJson[subPacket]
         const label = document.createElement('h2')
         label.innerText = json.name
 
         const Docs = document.createElement('div')
-        Docs.classList.add("content","nested")
+        Docs.classList.add("content", "nested")
         Docs.style.display = 'none';
-        Docs.innerHTML = `${generateTable(json)}${generateDescriptions(json)}`
-        const CPD =  createCollapsibleDiv(label,Docs)
+        const packetTable =
+            Docs.appendChild(generateTable(json))
+        Docs.appendChild(generateDescriptions(json))
+        const CPD = createCollapsibleDiv(label, Docs)
         packDoc.appendChild(CPD)
-        // var packDoc = document.getElementById(packDoc.id);
-        // const contentId = `collapsible-${packDoc.id}`
-        // var html = 
-        // `<h2 class="collapsible" data-target=${contentId}>${json.name}</h2>
-        // <div id="${contentId}" class="content nested"  style="display: none;">
-        //     ${generateTable(json)}
-        //     ${generateDescriptions(json)}
-        // </div>`
-        // packDoc.innerHTML = html;
-    } catch(error) {
-        console.error("Error loading JSON:", error);        
+
+    } catch (error) {
+        console.error("Error loading JSON:", error);
     }
 }
 
@@ -133,6 +236,8 @@ async function InsertPacketDocs() {
     var packetDocs = document.getElementsByClassName(packetClass);
     for (var i = 0; i < packetDocs.length; i++) {
         var packetDoc = packetDocs[i];
+        // console.log(packetDoc)
         await InsertPacketDoc(packetDoc)
     }
 }
+

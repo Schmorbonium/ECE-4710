@@ -1,61 +1,69 @@
 {
-    "name":"IBC Packet",
-    "wordSize":8,
-    "fields":[
-        {
-            "name":"Attention Bits",
-            "fieldType":"SuperField",
-            "bits":4,
-            "def":"Bits used to determine what device should listen to this packet",
-            "subFields":[
-                {
-                    "name":"Mem IO Attention Flag",
-                    "fieldType":"Flag",
-                    "bits":1,
-                    "def":"Signal Memory interface to listen to this packet"
-                },
-                {
-                    "name":"Controller Attention Flag",
-                    "fieldType":"Flag",
-                    "bits":1,
-                    "def":"Signal Controller board to listen to this packet"
-                },
-                {
-                    "name":"Register Attention Flag",
-                    "fieldType":"Flag",
-                    "bits":1,
-                    "def":"Signal Register File to listen to this packet"
-                },
-                {
-                    "name":"ALU Attention Flag",
-                    "fieldType":"Flag",
-                    "bits":1,
-                    "def":"Signal ALU board to listen to this packet"
-                }                                
-            ]
-        },
-        {
-            "name":"unused",
-            "fieldType":"Unused",
-            "bits":2
-        },
-        {
-            "name":"ttl",
-            "fieldType":"UNum",
-            "bits":2,
-            "def":"Time to Live, This refers to the number of times this packet should be forwarded"
-        },
-        {
-            "name":"Data Length",
-            "fieldType":"UNum",
-            "bits":3,
-            "def":"The number of Bytes of data to follow"
-        },
-        {
-            "name":"Message Command ID",
-            "fieldType":"Enum",
-            "bits":5,
-            "def":"This is the ID if the command that is being executed"
-        }
-    ]
+    "header": {
+        "name": "IBC Packet",
+        "wordSize": 8,
+        "fields": [
+            {
+                "name": "Attention Bits",
+                "fieldType": "SuperField",
+                "bits": 4,
+                "def": "Bits used to determine what device should listen to this packet",
+                "fields": [
+                    {
+                        "name": "Mem/IO",
+                        "fieldType": "Flag",
+                        "bits": 1,
+                        "def": "Signal Memory interface to listen to this packet"
+                    },
+                    {
+                        "name": "Controller",
+                        "fieldType": "Flag",
+                        "bits": 1,
+                        "def": "Signal Controller board to listen to this packet"
+                    },
+                    {
+                        "name": "RegFile",
+                        "fieldType": "Flag",
+                        "bits": 1,
+                        "def": "Signal Register File to listen to this packet"
+                    },
+                    {
+                        "name": "ALU",
+                        "fieldType": "Flag",
+                        "bits": 1,
+                        "def": "Signal ALU board to listen to this packet"
+                    }
+                ]
+            },
+            {
+                "name": "unused",
+                "fieldType": "unused",
+                "bits": 2
+            },
+            {
+                "name": "ttl",
+                "fieldType": "UNum",
+                "bits": 2,
+                "def": "Time to Live, This refers to the number of times this packet should be forwarded"
+            },
+            {
+                "name": "Data Length",
+                "fieldType": "UNum",
+                "bits": 3,
+                "def": "The number of Bytes of data to follow"
+            },
+            {
+                "name": "Message Command ID",
+                "fieldType": "enum",
+                "bits": 5,
+                "def": "This is the ID if the command that is being executed",
+                "options": [
+                    {
+                        "value": "0x01",
+                        "result": "BlueLED"
+                    }
+                ]
+            }
+        ]
+    }
 }
