@@ -1,5 +1,3 @@
-#include <iostream>
-#include <cstring>
 #include "charBuffer.hpp"
 
 
@@ -38,7 +36,7 @@ uint8_t CharBuffer::pop()
 {
     if (size == 0)
     {
-        throw std::out_of_range("Buffer is empty");
+        // throw std::out_of_range("Buffer is empty");
     }
 
     char value = head->data[headIndex];
@@ -60,7 +58,7 @@ uint8_t CharBuffer::pop()
 uint8_t CharBuffer::peak(uint16_t index) const
 {
     if(index+1 >  size){
-        throw std::out_of_range("requested:Index out of range :(");
+
     }
     uint16_t relIndex = index+headIndex;
     Node* curNode = head;
@@ -68,7 +66,7 @@ uint8_t CharBuffer::peak(uint16_t index) const
         curNode = curNode->next;
         relIndex -= NODE_SIZE;
     }
-    return curNode->data[relIndex]
+    return curNode->data[relIndex];
 }
 // Get the current size of the buffer
 size_t CharBuffer::getSize() const
@@ -107,10 +105,8 @@ void CharBuffer::print() const
     {
         while (currentIndex < tailIndex)
         {
-            std::cout << current->data[currentIndex++];
         }
         currentIndex = 0;
         current = current->next;
     }
-    std::cout << std::endl;
 }

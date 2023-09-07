@@ -1,6 +1,4 @@
-#include <iostream>
-#include <cstring>
-
+#include "stm32f1xx_hal.h"
 class CharBuffer {
 private:
     static const size_t NODE_SIZE = 16;
@@ -8,7 +6,7 @@ private:
         uint8_t data[NODE_SIZE];
         Node* next;
         Node() : next(nullptr) {
-            std::memset(data, 0, NODE_SIZE);
+            // std::memset(data, 0, NODE_SIZE);
         }
     };
     size_t size;
