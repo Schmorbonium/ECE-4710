@@ -59,6 +59,16 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define LED_PIN_Pin GPIO_PIN_13
 #define LED_PIN_GPIO_Port GPIOC
+#define USB_STATE_Pin GPIO_PIN_1
+#define USB_STATE_GPIO_Port GPIOA
+#define USB_TX_Pin GPIO_PIN_2
+#define USB_TX_GPIO_Port GPIOA
+#define USB_RX_Pin GPIO_PIN_3
+#define USB_RX_GPIO_Port GPIOA
+#define IBC_TX_Pin GPIO_PIN_9
+#define IBC_TX_GPIO_Port GPIOA
+#define IBC_RX_Pin GPIO_PIN_10
+#define IBC_RX_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 
