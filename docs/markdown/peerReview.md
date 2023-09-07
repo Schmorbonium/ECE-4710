@@ -3,10 +3,11 @@
 *Review Open*
 ## FeedBack
 - Needs Ground plane
-  - *Pending*
+  - *Resolved*
 - Needs Revision Label
-  - *Pending*
+  - *Resolved*
 - Need to Add A MAX Ports for buses written by Mem.
+  - *Resolved*
 
 # ALU
 ## Status
