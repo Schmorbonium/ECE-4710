@@ -18,5 +18,10 @@
         "text":"Test",
         "type":"markDown",
         "ref":"Test.md"
+    },
+    {
+        "text":"Peer Review V1",
+        "type":"markDown",
+        "ref":"peerReview.md"
     }
 ]
