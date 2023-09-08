@@ -4,25 +4,20 @@
 class BufferedUart
 {
 private:
+    bool listening;
+    bool sending;
     CharBuffer TxQue;
     CharBuffer RxQue;
-    UART_HandleTypeDef* Uart;
+    UART_HandleTypeDef* uart;
+    void startSending();
+    void stopSending();
 public:
-    virtual void UartHandler();
-    virtual void newData();
-    void Send();
-    uint8_t dataAvailable();
-};
-
-class BufferedUart
-{
-private:
-    CharBuffer TxQue;
-    CharBuffer RxQue;
-
-public:
-    virtual void UartHandler();
-    virtual void newData();
-    void Send();
-    uint8_t dataAvailable();
+    BufferedUart(UART_HandleTypeDef* Core);
+    virtual void uartHandler();
+    void startListening();
+    void stopListening();
+    void send(uint8_t* buf, uint16_t length);
+    void takeFromInbox(uint8_t* buf, uint16_t size);
+    uint16_t getInputSize();
+    uint16_t getOutputSize();
 };

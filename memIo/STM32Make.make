@@ -39,7 +39,6 @@ C_SOURCES =  \
 Core/Src/gpio.c \
 Core/Src/spi.c \
 Core/Src/stm32f1xx_hal_msp.c \
-Core/Src/stm32f1xx_it.c \
 Core/Src/system_stm32f1xx.c \
 Core/Src/tim.c \
 Core/Src/usart.c \
@@ -63,8 +62,10 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c
 CPP_SOURCES = \
 Core/Src/CharBuffer.cpp \
 Core/Src/bufferedUart.cpp \
-Core/Src/gpio.cpp \
-Core/Src/main.cpp
+Core/Src/comIf.cpp \
+Core/Src/gpioObj.cpp \
+Core/Src/main.cpp \
+Core/Src/stm32f1xx_it.cpp
 
 
 # ASM sources
@@ -80,7 +81,7 @@ PREFIX = arm-none-eabi-
 POSTFIX = "
 # The gcc compiler bin path can be either defined in make command via GCC_PATH variable (> make GCC_PATH=xxx)
 # either it can be added to the PATH environment variable.
-GCC_PATH="c:/Users/izeek/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-tools/arm-none-eabi-gcc/12.2.1-1.2.1/.content/bin
+GCC_PATH="c:/Users/izeek/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-tools/arm-none-eabi-gcc/12.3.1-1.1.1/.content/bin
 ifdef GCC_PATH
 CXX = $(GCC_PATH)/$(PREFIX)g++$(POSTFIX)
 CC = $(GCC_PATH)/$(PREFIX)gcc$(POSTFIX)
@@ -234,13 +235,13 @@ $(BUILD_DIR):
 # flash
 #######################################
 flash: $(BUILD_DIR)/$(TARGET).elf
-	"C:/USERS/IZEEK/APPDATA/ROAMING/CODE/USER/GLOBALSTORAGE/BMD.STM32-FOR-VSCODE/@XPACK-DEV-TOOLS/OPENOCD/0.12.0-1.1/.CONTENT/BIN/OPENOCD.EXE" -f ./openocd.cfg -c "program $(BUILD_DIR)/$(TARGET).elf verify reset exit"
+	"C:/USERS/IZEEK/APPDATA/ROAMING/CODE/USER/GLOBALSTORAGE/BMD.STM32-FOR-VSCODE/@XPACK-DEV-TOOLS/OPENOCD/0.12.0-2.1/.CONTENT/BIN/OPENOCD.EXE" -f ./openocd.cfg -c "program $(BUILD_DIR)/$(TARGET).elf verify reset exit"
 
 #######################################
 # erase
 #######################################
 erase: $(BUILD_DIR)/$(TARGET).elf
-	"C:/USERS/IZEEK/APPDATA/ROAMING/CODE/USER/GLOBALSTORAGE/BMD.STM32-FOR-VSCODE/@XPACK-DEV-TOOLS/OPENOCD/0.12.0-1.1/.CONTENT/BIN/OPENOCD.EXE" -f ./openocd.cfg -c "init; reset halt; stm32f1x mass_erase 0; exit"
+	"C:/USERS/IZEEK/APPDATA/ROAMING/CODE/USER/GLOBALSTORAGE/BMD.STM32-FOR-VSCODE/@XPACK-DEV-TOOLS/OPENOCD/0.12.0-2.1/.CONTENT/BIN/OPENOCD.EXE" -f ./openocd.cfg -c "init; reset halt; stm32f1x mass_erase 0; exit"
 
 #######################################
 # clean up
