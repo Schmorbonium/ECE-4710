@@ -31,7 +31,7 @@
 *Review Open*
 ## FeedBack
 - See ALU feedback
-    - *Resolved*
+  - *Resolved*
 ## Order Prep Checklist
 - [x] Ground planes on top and bottom
 - [x] Identifier label for which board and which version
@@ -43,8 +43,15 @@
 *Incomplete*
 ## FeedBack
 - Step 1:
-    - Connect the components.....
-        - *pending*
+  - Connect the components.....
+    - *pending*
+- Missing top layer ground plane
+  - *pending*
+- Bus header alignment does not match presentation sketch
+  - *pending*
+- Blue pill pinout not documented on sheets
+  - *pending*
+
 ## Order Prep Checklist
 - [ ] Ground planes on top and bottom
 - [ ] Identifier label for which board and which version
