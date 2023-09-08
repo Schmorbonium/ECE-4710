@@ -3,17 +3,17 @@
 *Review Open*
 ## FeedBack
 - Needs Ground plane
-  - *Resolved*
+    - *Resolved*
 - Needs Revision Label
-  - *Resolved*
+    - *Resolved*
 - Need to Add A MAX Ports for buses written by Mem.
-  - *Resolved*
+    - *Resolved*
 - Dangling duplicate USB-UART chip
-  - *pending*
+    - *pending*
 - It appears that Hardware Flow Control is enabled by default on USB-UART chip. Confirm whether you wil also enable HFC on bluepill or disable on MCP
-  - *pending*
+    - *pending*
 - Consider whether USB-UART and Blue pill `RST` should be connected to each other
-  - *pending*
+    - *pending*
 
 ## Order Prep Checklist
 - [ ] Ground planes on top and bottom
@@ -25,9 +25,9 @@
 *Review Open*
 ## FeedBack
 - LEDs do NOT need resisters, The LED controller controls current. I calculated the set resister to be 2K (Check my math)
-  - *Resolved*
+    - *Resolved*
 - LEDs forward voltage is 3.3 meaning they require at least 3.3 to operate, I think to play it safe we should run the LEDs from the 5V rail. 
-  - *Resolved*
+    - *Resolved*
 ## Order Prep Checklist
 - [x] Ground planes on top and bottom
 - [x] Identifier label for which board and which version
@@ -38,7 +38,7 @@
 *Review Open*
 ## FeedBack
 - See ALU feedback
-  - *Resolved*
+    - *Resolved*
 ## Order Prep Checklist
 - [x] Ground planes on top and bottom
 - [x] Identifier label for which board and which version
@@ -47,17 +47,17 @@
 
 # Controller
 ## Status
-*Incomplete*
+Reviewed by Daniel
 ## FeedBack
 - Step 1:
-  - Connect the components.....
-    - *Resolved*
+    - Connect the components.....
+        - *Resolved*
 - Missing top layer ground plane
-  - *Resolved*
+    - *Resolved*
 - Bus header alignment does not match presentation sketch
-  - *Resolved*
+    - *Resolved*
 - Blue pill pinout not documented on sheets
-  - *Resolved*
+    - *Resolved*
 
 ## Order Prep Checklist
 - [x] Ground planes on top and bottom
