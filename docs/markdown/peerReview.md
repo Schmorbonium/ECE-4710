@@ -51,7 +51,7 @@
 ## FeedBack
 - Step 1:
   - Connect the components.....
-    - *pending*
+    - *Resolved*
 - Missing top layer ground plane
   - *Resolved*
 - Bus header alignment does not match presentation sketch
