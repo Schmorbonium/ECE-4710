@@ -1,20 +1,16 @@
 #include "stm32f1xx_hal.h"
 class CharBuffer {
 private:
-    static const size_t NODE_SIZE = 16;
+    static const uint16_t NODE_SIZE = 16;
     struct Node {
         uint8_t data[NODE_SIZE];
         Node* next;
-        Node() : next(nullptr) {
-            // std::memset(data, 0, NODE_SIZE);
-        }
     };
-    size_t size;
-
+    uint16_t size;
     Node* head;
-    size_t headIndex;
+    uint16_t headIndex;
     Node* tail;
-    size_t tailIndex;
+    uint16_t tailIndex;
 
 public:
     CharBuffer();
@@ -30,7 +26,7 @@ public:
     uint8_t peak(uint16_t) const;
 
     // Get the current size of the buffer
-    size_t getSize() const;
+    uint16_t getSize() const;
 
     // Check if the buffer is empty
     bool isEmpty() const;
