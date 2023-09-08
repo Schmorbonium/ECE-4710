@@ -25,7 +25,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "gpio.hpp"
+#include "gpioObj.hpp"
+#include "bufferedUart.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,13 +51,17 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart2;
+BufferedUart bufUart1(&huart1);
+BufferedUart bufUart2(&huart2);
 /* USER CODE END 0 */
 
 /**
@@ -91,8 +96,13 @@ int main(void)
   MX_TIM1_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
+
+  /* Initialize interrupts */
+  MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
   GPIO statusLED(LED_PIN_GPIO_Port,LED_PIN_Pin);
+  bufUart1.startListening();
+  bufUart2.startListening();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -100,6 +110,11 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+    if(bufUart1.getInputSize() >= 10){
+      uint8_t buffer[10];
+      bufUart1.takeFromInbox(buffer,10);
+      bufUart1.send(buffer,10);
+    }
 
     /* USER CODE BEGIN 3 */
   }
@@ -140,6 +155,20 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief NVIC Configuration.
+  * @retval None
+  */
+static void MX_NVIC_Init(void)
+{
+  /* USART1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART1_IRQn);
+  /* USART2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART2_IRQn);
 }
 
 /* USER CODE BEGIN 4 */
