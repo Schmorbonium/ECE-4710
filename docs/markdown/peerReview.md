@@ -9,16 +9,19 @@
 - Need to Add A MAX Ports for buses written by Mem.
     - *Resolved*
 - Dangling duplicate USB-UART chip
-    - *pending*
+    - *Resolved*
+    -Opps :) I added that to refresh the library, guess I forgot tyo delete it.
 - It appears that Hardware Flow Control is enabled by default on USB-UART chip. Confirm whether you wil also enable HFC on bluepill or disable on MCP
-    - *pending*
+    - *Resolved*
+    - I decided to add the Hardware control lines to the design, This will help prevent high load data loss. My Packet Parsing is very susceptible to lost bytes.  
 - Consider whether USB-UART and Blue pill `RST` should be connected to each other
-    - *pending*
+    - *Considered and declined*
+    - I Would rather not having to worry if interference from the PCB causing 1 or both the of the devices to reset
 
 ## Order Prep Checklist
-- [ ] Ground planes on top and bottom
-- [ ] Identifier label for which board and which version
-- [ ] JLC-PCB DRC has been run, no remaining errors or warnings
+- [x] Ground planes on top and bottom
+- [x] Identifier label for which board and which version
+- [x] JLC-PCB DRC has been run, no remaining errors or warnings
 
 # ALU
 ## Status
