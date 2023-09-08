@@ -53,13 +53,13 @@
   - Connect the components.....
     - *pending*
 - Missing top layer ground plane
-  - *pending*
+  - *Resolved*
 - Bus header alignment does not match presentation sketch
   - *pending*
 - Blue pill pinout not documented on sheets
-  - *pending*
+  - *Resolved*
 
 ## Order Prep Checklist
-- [ ] Ground planes on top and bottom
-- [ ] Identifier label for which board and which version
-- [ ] JLC-PCB DRC has been run, no remaining errors or warnings
+- [x] Ground planes on top and bottom
+- [x] Identifier label for which board and which version
+- [x] JLC-PCB DRC has been run, no remaining errors or warnings
