@@ -31,6 +31,8 @@
     - *Resolved*
 - LEDs forward voltage is 3.3 meaning they require at least 3.3 to operate, I think to play it safe we should run the LEDs from the 5V rail. 
     - *Resolved*
+- Power Lines UnderRated for max expected current
+  - 10 LEDs@20mA + STM@~150mA -> max 350 mA. given our copper thickness (1 oz/in^2). According to [This Calculator](https://www.7pcb.com/trace-width-calculator) Your min Power Rail width should be 8 mil, your closer to 4 or 5
 ## Order Prep Checklist
 - [x] Ground planes on top and bottom
 - [x] Identifier label for which board and which version
@@ -38,10 +40,12 @@
 
 # RegisterFile
 ## Status
-*Review Open*
+*Non-starter*
 ## FeedBack
 - See ALU feedback
     - *Resolved*
+- Power Lines Severely UnderRated for max expected current
+  - 64 LEDs@20mA + STM@~150mA -> max 3.1 A. given our copper thickness (1 oz/in^2). According to [This Calculator](https://www.7pcb.com/trace-width-calculator) Your min Power Rail width should be 1125.5 mil, your closer to 4 or 5, These traces would not live long :(
 ## Order Prep Checklist
 - [x] Ground planes on top and bottom
 - [x] Identifier label for which board and which version
@@ -50,7 +54,7 @@
 
 # Controller
 ## Status
-Reviewed by Daniel
+Reviewed by Daniel & Isaac
 ## FeedBack
 - Step 1:
     - Connect the components.....
