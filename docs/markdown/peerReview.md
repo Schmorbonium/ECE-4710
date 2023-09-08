@@ -8,6 +8,13 @@
   - *Resolved*
 - Need to Add A MAX Ports for buses written by Mem.
   - *Resolved*
+- Dangling duplicate USB-UART chip
+  - *pending*
+- It appears that Hardware Flow Control is enabled by default on USB-UART chip. Confirm whether you wil also enable HFC on bluepill or disable on MCP
+  - *pending*
+- Consider whether USB-UART and Blue pill `RST` should be connected to each other
+  - *pending*
+
 ## Order Prep Checklist
 - [ ] Ground planes on top and bottom
 - [ ] Identifier label for which board and which version
