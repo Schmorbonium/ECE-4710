@@ -55,7 +55,7 @@
 - Missing top layer ground plane
   - *Resolved*
 - Bus header alignment does not match presentation sketch
-  - *pending*
+  - *Resolved*
 - Blue pill pinout not documented on sheets
   - *Resolved*
 
