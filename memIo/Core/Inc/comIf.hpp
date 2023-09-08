@@ -1,4 +1,10 @@
 #include "stm32f1xx_hal.h"
+#include "bufferedUart.hpp"
+
+
+typedef uint32_t CmdStatus;
+typedef uint32_t MemAddr;
+typedef uint32_t RegIndex;
 
 enum cmdID
 {
@@ -17,63 +23,92 @@ enum cmdID
     dbTogDB = 0x1A
 };
 
-class encoder{
-
+struct Header
+{
+    uint8_t cmd;
+    uint8_t dataBytes;
+    uint8_t unused;
+    uint8_t Flags;
 };
 
-class decoder{
-
-
+struct SetMemMsg
+{
+    Header header;
+    MemAddr address;
+    uint32_t data[];
+};
+struct SetMemResponse
+{
+    Header header;
+    CmdStatus status;
 };
 
-class PktField{
-    public:
-    char* encode();
-    void decode(char*);
-    protected:
-    virtual bool SetNextField();
-    uint16_t length;
-    uint16_t place;
-    bool terminal;
-    PktField* next;
+struct GetMemData
+{
+    Header header;
+    MemAddr address;
+    uint32_t ReadLength;
+};
+struct GetMemResponse
+{
+    const Header header;
+    const CmdStatus status;
+    uint32_t data[];
 };
 
-class Header:public PktField{
-    bool SetNextField();
+struct GetRegData
+{
+    Header header;
+    uint32_t Register;
+};
+struct GetRegResponse
+{
+    Header header;
+    uint32_t RegisterVal;
 };
 
-class ResetData:public PktField{
-    bool SetNextField();
+struct SetRegData
+{
+    Header header;
+    uint32_t Register;
+    uint32_t value;
+};
+struct SetRegResponse
+{
+    Header header;
+    CmdStatus status;
 };
 
-class SetMemData:public PktField{
-    bool SetNextField();
+struct GetPcData
+{
+    Header header;
+};
+struct GetPcResponse
+{
+    Header header;
+    uint32_t PC;
 };
 
-class GetMemData:public PktField{
-    bool SetNextField();
+struct SetPcData
+{
+    Header header;
+    uint32_t value;
+};
+struct SetPcResponse
+{
+    Header header;
+    CmdStatus status;
 };
 
-class GetRegData:public PktField{
-    bool SetNextField();
+class comIf : BufferedUart
+{
+private:
+    Header curHeader;
+    uint8_t *curData;
+
+public:
+    bool packetReady();
+    bool getPacket();
+    virtual void respond(uint8_t *data, uint8_t dataLength);
+    virtual void send(Header header, uint8_t *data, uint8_t dataLength);
 };
-
-class SetRegData:public PktField{
-    bool SetNextField();
-};
-
-class GetPcData:public PktField{
-    bool SetNextField();
-};
-
-class SetPcData:public PktField{
-    bool SetNextField();
-};
-
-template<class T>
-class pktNode{
-
-}
-
-
-
