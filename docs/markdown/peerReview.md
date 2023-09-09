@@ -1,6 +1,6 @@
 # Mem-IO
 ## Status
-*Review Open*
+Reviewed by Daniel
 ## FeedBack
 - Needs Ground plane
     - *Resolved*
@@ -10,7 +10,7 @@
     - *Resolved*
 - Dangling duplicate USB-UART chip
     - *Resolved*
-    -Opps :) I added that to refresh the library, guess I forgot tyo delete it.
+    -Oops :) I added that to refresh the library, guess I forgot tyo delete it.
 - It appears that Hardware Flow Control is enabled by default on USB-UART chip. Confirm whether you wil also enable HFC on bluepill or disable on MCP
     - *Resolved*
     - I decided to add the Hardware control lines to the design, This will help prevent high load data loss. My Packet Parsing is very susceptible to lost bytes.  
@@ -31,8 +31,9 @@
     - *Resolved*
 - LEDs forward voltage is 3.3 meaning they require at least 3.3 to operate, I think to play it safe we should run the LEDs from the 5V rail. 
     - *Resolved*
-- Power Lines UnderRated for max expected current
-  - 10 LEDs@20mA + STM@~150mA -> max 350 mA. given our copper thickness (1 oz/in^2). According to [This Calculator](https://www.7pcb.com/trace-width-calculator) Your min Power Rail width should be 8 mil, your closer to 4 or 5
+- Power Lines UnderRated for max expected current. 10 LEDs@20mA + STM@~150mA -> max 350 mA. given our copper thickness (1 oz/in^2). According to [This Calculator](https://www.7pcb.com/trace-width-calculator) Your min Power Rail width should be 8 mil, your closer to 4 or 5
+    - *Awaiting second round of review*
+    - Checking with the linked calculator, and 4 other calculators, I get that the minimum trace width here is 2.8 mil, so the default 6 mil should be sufficient.
 ## Order Prep Checklist
 - [x] Ground planes on top and bottom
 - [x] Identifier label for which board and which version
@@ -44,8 +45,9 @@
 ## FeedBack
 - See ALU feedback
     - *Resolved*
-- Power Lines Severely UnderRated for max expected current
-  - 64 LEDs@20mA + STM@~150mA -> max 3.1 A. given our copper thickness (1 oz/in^2). According to [This Calculator](https://www.7pcb.com/trace-width-calculator) Your min Power Rail width should be 1125.5 mil, your closer to 4 or 5, These traces would not live long :(
+- Power Lines Severely UnderRated for max expected current. 64 LEDs@20mA + STM@~150mA -> max 3.1 A. given our copper thickness (1 oz/in^2). According to [This Calculator](https://www.7pcb.com/trace-width-calculator) Your min Power Rail width should be 1125.5 mil, your closer to 4 or 5, These traces would not live long :(
+    - *Awaiting second round of review*
+    - Checking with the linked calculator, and 4 other calculators, I get that the peak current here is 1.43A, which has a minimum trace width requirement of 19.4 mil, which was rounded up to 24 mil. The majority of the 5V traces have been converted, aside from a pair of small branches off the main trace that only feed a few LEDs.
 ## Order Prep Checklist
 - [x] Ground planes on top and bottom
 - [x] Identifier label for which board and which version
