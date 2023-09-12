@@ -8,7 +8,7 @@
 # The project name
 target: DaisyUartTestDisco
 # Can be C or C++
-language: C
+language: C++
 
 optimization: Og
 
@@ -72,6 +72,7 @@ includeDirectories:
   - Inc/**
   - Core/Inc/**
   - Core/Lib/**
+  - Common-Lib/Inc/**
   - Src/**
   - Core/Src/**
   - Core/Lib/**
@@ -86,7 +87,7 @@ sourceFiles:
   - Src/**
   - Core/Src/**
   - Core/Lib/**
-
+  - Common-Lib/Src/**
 
 # When no makefile is present it will show a warning pop-up.
 # However when compilation without the CubeMX Makefile is desired, this can be turned of.

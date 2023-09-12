@@ -26,6 +26,8 @@
 extern "C" {
 #endif
 
+// #define __BLUE_PILL
+#define __DISCO
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_hal.h"
 
