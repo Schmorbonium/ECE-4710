@@ -68,7 +68,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
     if (buf == '\n') {
         longbuf[count++] = '\n';
         if (HAL_UART_GetState(&huart1) == HAL_UART_STATE_READY && HAL_UART_Transmit_IT(&huart1, longbuf, count) != HAL_OK) {
-            HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+            // HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
         }
     }
     else {
@@ -106,9 +106,9 @@ int main(void) {
     MX_GPIO_Init();
     MX_USART1_UART_Init();
     /* USER CODE BEGIN 2 */
-    HAL_UART_RegisterCallback(&huart1, HAL_UART_TX_COMPLETE_CB_ID, &HAL_UART_TxCpltCallback);
-    NVIC_EnableIRQ(USART1_IRQn);
-    HAL_UART_RegisterCallback(&huart1, HAL_UART_RX_COMPLETE_CB_ID, &HAL_UART_RxCpltCallback);
+    // HAL_UART_RegisterCallback(&huart1, HAL_UART_TX_COMPLETE_CB_ID, &HAL_UART_TxCpltCallback);
+    // NVIC_EnableIRQ(USART1_IRQn);
+    // HAL_UART_RegisterCallback(&huart1, HAL_UART_RX_COMPLETE_CB_ID, &HAL_UART_RxCpltCallback);
 
 
     /* USER CODE END 2 */
@@ -121,7 +121,7 @@ int main(void) {
         char* data = "Hello World\n";
         if (HAL_GetTick() - lastTick >= 1000) {
             HAL_UART_Transmit_IT(&huart1, data, 12);
-            // HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+            HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
             lastTick = HAL_GetTick();
         }
         /* USER CODE END WHILE */
@@ -216,7 +216,7 @@ static void MX_GPIO_Init(void) {
     /*Configure GPIO pin : LED_Pin */
     GPIO_InitStruct.Pin = LED_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
 
@@ -232,7 +232,7 @@ static void MX_GPIO_Init(void) {
   */
 void Error_Handler(void) {
     /* USER CODE BEGIN Error_Handler_Debug */
-          /* User can add his own implementation to report the HAL error return state */
+            /* User can add his own implementation to report the HAL error return state */
     __disable_irq();
     while (1)
     {
@@ -250,8 +250,8 @@ void Error_Handler(void) {
   */
 void assert_failed(uint8_t* file, uint32_t line) {
     /* USER CODE BEGIN 6 */
-          /* User can add his own implementation to report the file name and line number,
-             ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-             /* USER CODE END 6 */
+            /* User can add his own implementation to report the file name and line number,
+               ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+               /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
