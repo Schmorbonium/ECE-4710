@@ -59,12 +59,22 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define LED_PIN_Pin GPIO_PIN_13
 #define LED_PIN_GPIO_Port GPIOC
-#define USB_STATE_Pin GPIO_PIN_1
-#define USB_STATE_GPIO_Port GPIOA
+#define USB_CTS_Pin GPIO_PIN_0
+#define USB_CTS_GPIO_Port GPIOA
+#define USB_RTS_Pin GPIO_PIN_1
+#define USB_RTS_GPIO_Port GPIOA
 #define USB_TX_Pin GPIO_PIN_2
 #define USB_TX_GPIO_Port GPIOA
 #define USB_RX_Pin GPIO_PIN_3
 #define USB_RX_GPIO_Port GPIOA
+#define USB_STATE_Pin GPIO_PIN_4
+#define USB_STATE_GPIO_Port GPIOA
+#define LED_DATA_Pin GPIO_PIN_5
+#define LED_DATA_GPIO_Port GPIOA
+#define LED_CLK_Pin GPIO_PIN_6
+#define LED_CLK_GPIO_Port GPIOA
+#define LED_LATCH_Pin GPIO_PIN_7
+#define LED_LATCH_GPIO_Port GPIOA
 #define IBC_TX_Pin GPIO_PIN_9
 #define IBC_TX_GPIO_Port GPIOA
 #define IBC_RX_Pin GPIO_PIN_10
