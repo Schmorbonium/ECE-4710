@@ -101,8 +101,9 @@ int main(void)
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
   GPIO statusLED(LED_PIN_GPIO_Port,LED_PIN_Pin);
-  bufUart1.startListening();
   bufUart2.startListening();
+  char string[] = "hello World!";
+  bufUart2.send((uint8_t*)&string,12);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -110,10 +111,10 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    if(bufUart1.getInputSize() >= 10){
-      uint8_t buffer[10];
-      bufUart1.takeFromInbox(buffer,10);
-      bufUart1.send(buffer,10);
+    if(bufUart2.getInputSize() >= 8){
+      uint8_t buffer[8];
+      bufUart2.takeFromInbox(buffer,8);
+      bufUart2.send(buffer,8);
     }
 
     /* USER CODE BEGIN 3 */
