@@ -3,6 +3,7 @@
     {
       "name": "STM32",
       "includePath": [
+        "Common-Lib/Inc",
         "Core/Inc",
         "Drivers/CMSIS/Device/ST/STM32F1xx/Include",
         "Drivers/CMSIS/Include",
