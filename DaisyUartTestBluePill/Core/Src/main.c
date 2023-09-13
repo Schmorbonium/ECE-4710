@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdlib.h>
 
 /* USER CODE END Includes */
 
@@ -85,11 +86,11 @@ uint8_t longbuf[100];
 uint32_t count = 0;
 
 IbcPacket* checkForPacket(uint8_t* buffer, uint32_t buf_len) {
-    if (buf_len < 3 || buf_len - 2 < IBCP_LEN(buffer)) // -2 to account for header
+    if (buf_len < 3 || buf_len - 2 < IBCP_LEN((uint16_t*) buffer)) // -2 to account for header
         return NULL;
 
     IbcRawHeader* hp = (IbcRawHeader*)buffer;
-    IbcPacket* newPacket = malloc(sizeof(IbcPacket) + IBCP_LEN(hp));
+    IbcPacket* newPacket = (IbcPacket*)malloc(sizeof(IbcPacket) + IBCP_LEN(hp));
     newPacket->attn = IBCP_ATTN(hp);
     newPacket->ttl = IBCP_TTL(hp);
     newPacket->len = IBCP_LEN(hp);
@@ -129,7 +130,34 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
     if (pkt != NULL) {
 
         if ((pkt->attn >> THIS_DEV_ATTN_ID) & 0x1) {
-            HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+            // HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+            // if (pkt->data == 1) {
+            //     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+            // }
+            // else if (pkt->data == 2) {
+            //     HAL_GPIO_TogglePin(GLED_GPIO_Port, GLED_Pin);
+            // }
+            uint32_t data;
+            switch (pkt->len) {
+            case 1:
+                data = *((uint8_t*)pkt->data);
+                break;
+            case 2:
+                data = *((uint16_t*)pkt->data);
+                break;
+            case 4:
+                data = *((uint32_t*)pkt->data);
+                break;
+            }
+
+            switch (data) {
+            case 1:
+                HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+                break;
+            case 2:
+                HAL_GPIO_TogglePin(GLED_GPIO_Port, GLED_Pin);
+                break;
+            }
         }
 
         // if packet has hops left, forward it
@@ -175,9 +203,9 @@ int main(void) {
     MX_GPIO_Init();
     MX_USART1_UART_Init();
     /* USER CODE BEGIN 2 */
-    // HAL_UART_RegisterCallback(&huart1, HAL_UART_TX_COMPLETE_CB_ID, &HAL_UART_TxCpltCallback);
-    // NVIC_EnableIRQ(USART1_IRQn);
-    // HAL_UART_RegisterCallback(&huart1, HAL_UART_RX_COMPLETE_CB_ID, &HAL_UART_RxCpltCallback);
+      // HAL_UART_RegisterCallback(&huart1, HAL_UART_TX_COMPLETE_CB_ID, &HAL_UART_TxCpltCallback);
+      // NVIC_EnableIRQ(USART1_IRQn);
+      // HAL_UART_RegisterCallback(&huart1, HAL_UART_RX_COMPLETE_CB_ID, &HAL_UART_RxCpltCallback);
 
 
     /* USER CODE END 2 */
@@ -193,9 +221,9 @@ int main(void) {
         //     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
         //     lastTick = HAL_GetTick();
         // }
-        /* USER CODE END WHILE */
+    /* USER CODE END WHILE */
 
-        /* USER CODE BEGIN 3 */
+    /* USER CODE BEGIN 3 */
     }
     /* USER CODE END 3 */
 }
@@ -278,9 +306,13 @@ static void MX_GPIO_Init(void) {
     /* GPIO Ports Clock Enable */
     __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
 
     /*Configure GPIO pin Output Level */
     HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+
+    /*Configure GPIO pin Output Level */
+    HAL_GPIO_WritePin(GLED_GPIO_Port, GLED_Pin, GPIO_PIN_RESET);
 
     /*Configure GPIO pin : LED_Pin */
     GPIO_InitStruct.Pin = LED_Pin;
@@ -288,6 +320,13 @@ static void MX_GPIO_Init(void) {
     GPIO_InitStruct.Pull = GPIO_PULLUP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
+
+    /*Configure GPIO pin : GLED_Pin */
+    GPIO_InitStruct.Pin = GLED_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GLED_GPIO_Port, &GPIO_InitStruct);
 
 }
 
@@ -301,7 +340,7 @@ static void MX_GPIO_Init(void) {
   */
 void Error_Handler(void) {
     /* USER CODE BEGIN Error_Handler_Debug */
-            /* User can add his own implementation to report the HAL error return state */
+              /* User can add his own implementation to report the HAL error return state */
     __disable_irq();
     while (1)
     {
@@ -319,8 +358,8 @@ void Error_Handler(void) {
   */
 void assert_failed(uint8_t* file, uint32_t line) {
     /* USER CODE BEGIN 6 */
-            /* User can add his own implementation to report the file name and line number,
-               ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-               /* USER CODE END 6 */
+              /* User can add his own implementation to report the file name and line number,
+                 ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+                 /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
