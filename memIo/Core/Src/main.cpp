@@ -151,10 +151,10 @@ int main(void)
       index++;
     }
     /* USER CODE END WHILE */
-    if(bufUart1.getInputSize() >= 10){
-      uint8_t buffer[10];
-      bufUart1.takeFromInbox(buffer,10);
-      bufUart1.send(buffer,10);
+    if(bufUart2.getInputSize() >= 8){
+      uint8_t buffer[8];
+      bufUart2.takeFromInbox(buffer,8);
+      bufUart2.send(buffer,8);
     }
 
     /* USER CODE BEGIN 3 */
