@@ -1,7 +1,6 @@
 #include "comIf.h"
-
-
-
+#include "bufferedUart.hpp"
+#include "charBuffer.hpp"
 
 typedef uint32_t CmdStatus;
 typedef uint32_t MemAddr;
@@ -24,12 +23,91 @@ enum cmdID
     dbTogDB = 0x1A
 };
 
-struct Header
+class PacketField
 {
-    uint8_t cmd;
-    uint8_t dataBytes;
-    uint8_t unused;
-    uint8_t Flags;
+protected:
+    PacketField() {}
+    uint8_t data;
+public:
+    PacketField(uint8_t data): data(data){}
+    PacketField(CharBuffer* que){
+        
+    }
+    virtual bool parseFromQue(CharBuffer* que) { data = que.pop(); }
+    virtual bool appendToQue(CharBuffer* que) { que.append(data); }
+
+    void setData(uint8_t flags) { data = flags; }
+    uint8_t getData() { return data; }
+
+};
+
+class FlagField : public PacketField
+{
+protected:
+    FlagField() {}
+public:
+    FlagField(uint8_t flags): PacketField(data){}
+    void setFlag(uint8_t index) { data |= (1 << index); }
+    void resetFlag(uint8_t index) { data &= ~(1 << index); }
+    bool getFlag(uint8_t index) { return data & (1 << index); }
+};
+
+class Header : protected PacketField
+{
+protected:
+    Header();
+    PacketField cmd;
+    PacketField dataLen;
+    PacketField unused;
+    FlagField flags;
+public:
+    Header(cmdID cmd, uint8_t dataSize, uint8_t flags) : cmd(PacketField(cmd)), datLen(dataSize), flags(flags) {}
+
+    Header(CharBuffer que) : Header()
+    {
+
+        this->cmd = que.pop();
+        this->datLen = que.pop();
+        que.pop();
+        this->flags = que.pop();
+    }
+
+    virtual bool appendToQue(CharBuffer que)
+    {
+        uint8_t raw[4] = {cmd, datLen, 0, flags};
+        for (uint16_t i = 0; i < 4; i++)
+        {
+            que.append(raw[i]);
+        }
+    }
+};
+class ComputerInterfacePacket
+{
+private:
+    Header header;
+    bool PacketComplete;
+    ComputerInterfacePacket(Header header);
+
+public:
+    static uint8_t PeakPacketSize(CharBuffer inputBuffer)
+    {
+        return inputBuffer.peak(1);
+    }
+
+    static bool ReadyToParse(CharBuffer inputBuffer)
+    {
+        if (inputBuffer.getSize() < 4)
+        {
+            return false;
+        }
+        uint8_t packetSize = PeakPacketSize(inputBuffer);
+        if (inputBuffer.getSize() < packetSize)
+        {
+            return false;
+        }
+        return true;
+    }
+    static ComputerInterfacePacket *ParsePacket(CharBuffer inputBuffer);
 };
 
 struct SetMemMsg
@@ -100,16 +178,66 @@ struct SetPcResponse
     Header header;
     CmdStatus status;
 };
+static ComputerInterfacePacket *ComputerInterfacePacket::ParsePacket(CharBuffer inputBuffer)
+{
+    Header header = Header(inputBuffer);
+    ComputerInterfacePacket *pkt;
+    switch (header.cmd)
+    {
+    case rstPkt:
 
-class comIf : BufferedUart
+        break;
+    case setMem:
+        break;
+    case getMem:
+        break;
+    case dbSetReg:
+        break;
+    case dbGetReg:
+        break;
+    case dbFlags:
+        break;
+    case dbSetPC:
+        break;
+    case dbGetPC:
+        break;
+    case dbPause:
+        break;
+    case dbStep:
+        break;
+    case dbGetBP:
+        break;
+    case dbTogBP:
+        break;
+    case dbTogDB:
+        break;
+    default:
+        break;
+    }
+}
+class ComIf : BufferedUart
 {
 private:
-    Header curHeader;
-    uint8_t *curData;
-
 public:
+    ComIf(UART_HandleTypeDef *Core) : BufferedUart(Core)
+    {
+    }
     bool packetReady();
-    bool getPacket();
-    virtual void respond(uint8_t *data, uint8_t dataLength);
-    virtual void send(Header header, uint8_t *data, uint8_t dataLength);
+    ComputerInterfacePacket getPacket();
+    virtual void send(Header header, uint8_t *data);
 };
+
+ComIf *interface;
+
+/// @brief Initializes The computer interface on the given UART connection
+/// @param Core Pointer to the HAL Uart Handle
+void CompIfInit(UART_HandleTypeDef *Core)
+{
+    // interface = new
+}
+
+/// @brief This method handles the Uart interrupt for this interface
+void CompIfUartInterruptHAndler();
+
+/// @brief This Method handles all of the computer interface's work that can be completed synchonously.
+void CompIfSyncHandler();
