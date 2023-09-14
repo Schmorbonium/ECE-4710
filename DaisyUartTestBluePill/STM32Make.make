@@ -59,7 +59,10 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c
 CPP_SOURCES = \
 Common-Lib/Src/CharBuffer.cpp \
 Common-Lib/Src/bufferedUart.cpp \
-Common-Lib/Src/gpioObj.cpp
+Common-Lib/Src/gpioObj.cpp \
+Common-Lib/Src/ibc.cpp \
+Common-Lib/Src/ibcHandler.cpp \
+Common-Lib/Src/ibcPacket.cpp
 
 
 # ASM sources
@@ -170,7 +173,7 @@ LIBDIR = \
 
 
 # Additional LD Flags from config file
-ADDITIONALLDFLAGS = -specs=nano.specs 
+ADDITIONALLDFLAGS = -specs=nano.specs -specs=nosys.specs 
 
 LDFLAGS = $(MCU) $(ADDITIONALLDFLAGS) -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 

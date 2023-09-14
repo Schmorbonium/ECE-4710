@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
+#include "ibc.h"
 
 /* USER CODE END Includes */
 
@@ -32,30 +33,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-typedef uint16_t IbcRawHeader;
-
-typedef struct {
-    uint8_t attn;
-    uint8_t ttl;
-    uint8_t len;
-    uint8_t id;
-    uint8_t data[];
-} IbcPacket;
-
-#define IBCP_ATTN_IDX 4
-#define IBCP_TTL_IDX 0
-#define IBCP_LEN_IDX 13
-#define IBCP_ID_IDX 8
-#define IBCP_ATTN(packet) ((*packet & 0x00F0) >> IBCP_ATTN_IDX)
-#define IBCP_ATTN_THIS_DEVICE(packet) ((IBCP_ATTN(packet) >> THIS_DEV_ATTN_ID) & 0x1)
-#define IBCP_TTL(packet) ((*packet & 0x0003) >> IBCP_TTL_IDX)
-#define IBCP_LEN(packet) ((*packet & 0xE000) >> IBCP_LEN_IDX)
-#define IBCP_ID(packet) ((*packet & 0x1F00) >> IBCP_ID_IDX)
-
-#define IBCP_PKT(attn, ttl, len, id) (((attn & 0xF) << IBCP_ATTN_IDX) | ((ttl & 0x3) << IBCP_TTL_IDX) | ((len & 0x7) << IBCP_LEN_IDX) | ((id & 0x1F) << IBCP_ID_IDX))
-
-//attn idx: 0-3
-#define THIS_DEV_ATTN_ID 0
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -75,104 +52,12 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
+void handlePacket(uint8_t id, uint8_t len, uint8_t* data);
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-uint8_t incoming_byte[2];
-uint8_t longbuf[100];
-uint32_t count = 0;
-
-IbcPacket* checkForPacket(uint8_t* buffer, uint32_t buf_len) {
-    if (buf_len < 3 || buf_len - 2 < IBCP_LEN((uint16_t*) buffer)) // -2 to account for header
-        return NULL;
-
-    IbcRawHeader* hp = (IbcRawHeader*)buffer;
-    IbcPacket* newPacket = (IbcPacket*)malloc(sizeof(IbcPacket) + IBCP_LEN(hp));
-    newPacket->attn = IBCP_ATTN(hp);
-    newPacket->ttl = IBCP_TTL(hp);
-    newPacket->len = IBCP_LEN(hp);
-    newPacket->id = IBCP_ID(hp);
-    switch (newPacket->len) {
-    case 1:
-        newPacket->data[0] = buffer[2];
-        break;
-    case 2:
-        newPacket->data[0] = buffer[3];
-        newPacket->data[1] = buffer[2];
-        break;
-    case 3:
-        newPacket->data[0] = buffer[4];
-        newPacket->data[1] = buffer[3];
-        newPacket->data[2] = buffer[2];
-        break;
-    case 4:
-        newPacket->data[0] = buffer[5];
-        newPacket->data[1] = buffer[4];
-        newPacket->data[2] = buffer[3];
-        newPacket->data[3] = buffer[2];
-        break;
-    }
-
-    return newPacket;
-}
-
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
-    // HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-}
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
-    // HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-    longbuf[count++] = *incoming_byte;
-    IbcPacket* pkt = checkForPacket(longbuf, count);
-    if (pkt != NULL) {
-
-        if ((pkt->attn >> THIS_DEV_ATTN_ID) & 0x1) {
-            // HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-            // if (pkt->data == 1) {
-            //     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-            // }
-            // else if (pkt->data == 2) {
-            //     HAL_GPIO_TogglePin(GLED_GPIO_Port, GLED_Pin);
-            // }
-            uint32_t data;
-            switch (pkt->len) {
-            case 1:
-                data = *((uint8_t*)pkt->data);
-                break;
-            case 2:
-                data = *((uint16_t*)pkt->data);
-                break;
-            case 4:
-                data = *((uint32_t*)pkt->data);
-                break;
-            }
-
-            switch (data) {
-            case 1:
-                HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-                break;
-            case 2:
-                HAL_GPIO_TogglePin(GLED_GPIO_Port, GLED_Pin);
-                break;
-            }
-        }
-
-        // if packet has hops left, forward it
-        if (pkt->ttl > 1) {
-            *longbuf -= (1 << IBCP_TTL_IDX);
-            if (HAL_UART_GetState(&huart1) == HAL_UART_STATE_READY && HAL_UART_Transmit_IT(&huart1, longbuf, count) != HAL_OK) {
-                // HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_SET);
-            }
-        }
-
-        // reset index into buffer
-        count = 0;
-    }
-    HAL_UART_Receive_IT(&huart1, incoming_byte, 1);
-}
 
 /* USER CODE END 0 */
 
@@ -212,7 +97,8 @@ int main(void) {
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
-    HAL_UART_Receive_IT(&huart1, &incoming_byte, 1);
+    // HAL_UART_Receive_IT(&huart1, &incoming_byte, 1);
+    initIbc(&huart1, &handlePacket, 0x1);
     // uint32_t lastTick = HAL_GetTick();
     while (1) {
         // char* data = "Hello World\n";
@@ -226,6 +112,10 @@ int main(void) {
     /* USER CODE BEGIN 3 */
     }
     /* USER CODE END 3 */
+}
+
+void handlePacket(uint8_t id, uint8_t len, uint8_t* data) {
+
 }
 
 /**
