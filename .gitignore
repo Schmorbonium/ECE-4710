@@ -11,6 +11,7 @@
 
 */Drivers
 */MDK-ARM/DebugConfig
+*/build
 # Listing files
 *.cod
 *.htm
