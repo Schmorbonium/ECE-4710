@@ -42,6 +42,9 @@ Core/Src/stm32f1xx_hal_msp.c \
 Common-Lib/Src/bufferedUart.cpp \
 Common-Lib/Src/CharBuffer.cpp \
 Common-Lib/Src/gpioObj.cpp \
+Common-Lib/Src/ibc.cpp \
+Common-Lib/Src/ibcHandler.cpp \
+Common-Lib/Src/ibcPacket.cpp \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c \
