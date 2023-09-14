@@ -58,6 +58,10 @@ void handlePacket(uint8_t id, uint8_t len, uint8_t* data);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+void handlePacket(uint8_t id, uint8_t len, uint8_t* data) {
+
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -113,9 +117,6 @@ int main(void) {
     /* USER CODE END 3 */
 }
 
-void handlePacket(uint8_t id, uint8_t len, uint8_t* data) {
-
-}
 
 /**
   * @brief System Clock Configuration
