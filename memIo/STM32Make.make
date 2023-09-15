@@ -64,6 +64,7 @@ Common-Lib/Src/CharBuffer.cpp \
 Common-Lib/Src/bufferedUart.cpp \
 Common-Lib/Src/gpioObj.cpp \
 Core/Src/comIf.cpp \
+Core/Src/comIfPkts.cpp \
 Core/Src/main.cpp \
 Core/Src/stm32f1xx_it.cpp
 

@@ -37,6 +37,8 @@ BUILD_DIR = build
 # C sources
 C_SOURCES =  \
 Core/Src/main.cpp \
+Core/Src/comIf.cpp \
+Core/Src/comIfPkts.cpp \
 Core/Src/stm32f1xx_it.c \
 Core/Src/stm32f1xx_hal_msp.c \
 Common-Lib/Src/CharBuffer.cpp \
