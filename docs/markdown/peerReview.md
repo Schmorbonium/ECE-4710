@@ -1,3 +1,10 @@
+# Peer Review Preparation Checklist
+- [ ] Ground planes on top and bottom
+- [ ] All silkscreen part labels (in tName layer) do not overlap anything
+- [ ] Every part is labeled (resistance, capacitance, pin connection, etc.)
+- [ ] Identifier label for which board and which version
+- [ ] JLC-PCB DRC has been run, no remaining errors or warnings
+
 # Mem-IO
 ## Status
 Reviewed by Daniel
