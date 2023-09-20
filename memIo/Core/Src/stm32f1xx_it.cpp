@@ -223,7 +223,7 @@ void TIM1_UP_IRQHandler(void)
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
-  bufUart1.uartHandler();
+  // bufUart1.uartHandler();
   HAL_GPIO_TogglePin(LED_PIN_GPIO_Port,LED_PIN_Pin);
   /* USER CODE END USART1_IRQn 0 */
   /* USER CODE BEGIN USART1_IRQn 1 */
@@ -237,7 +237,7 @@ void USART1_IRQHandler(void)
 void USART2_IRQHandler(void)
 {
   /* USER CODE BEGIN USART2_IRQn 0 */
-  bufUart2.uartHandler();
+  // bufUart2.uartHandler();
   HAL_GPIO_TogglePin(LED_PIN_GPIO_Port,LED_PIN_Pin);
   /* USER CODE END USART2_IRQn 0 */
   /* USER CODE BEGIN USART2_IRQn 1 */
