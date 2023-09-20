@@ -59,7 +59,26 @@ void handlePacket(uint8_t id, uint8_t len, uint8_t* data);
 /* USER CODE BEGIN 0 */
 
 void handlePacket(uint8_t id, uint8_t len, uint8_t* data) {
-
+    uint32_t dat;
+    switch (len) {
+    case 1:
+        dat = *data;
+        break;
+    case 2:
+        dat = *((uint16_t*)data);
+        break;
+    case 4:
+        dat = *((uint32_t*)data);
+        break;
+    }
+    switch (dat) {
+    case 1:
+        HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+        break;
+    case 2:
+        HAL_GPIO_TogglePin(GLED_GPIO_Port, GLED_Pin);
+        break;
+    }
 }
 
 /* USER CODE END 0 */
@@ -110,9 +129,10 @@ int main(void) {
         //     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
         //     lastTick = HAL_GetTick();
         // }
-    /* USER CODE END WHILE */
+        processIbcInbox();
+        /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
+        /* USER CODE BEGIN 3 */
     }
     /* USER CODE END 3 */
 }
