@@ -1,9 +1,9 @@
-#ifndef __COM_IF_PKT__
-#define __COM_IF_PKT__
+// #ifndef __COM_IF_PKT__
+// #define __COM_IF_PKT__
 
-#include "comIf.h"
-#include "bufferedUart.hpp"
-#include "charBuffer.hpp"
+// #include "comIf.h"
+// #include "bufferedUart.hpp"
+// #include "charBuffer.hpp"
 
 enum cmdID
 {
