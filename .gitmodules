@@ -10,3 +10,6 @@
 [submodule "DaisyUartTestDisco/Common-Lib"]
 	path = DaisyUartTestDisco/Common-Lib
 	url = git@github.com:Schmorbonium/Common-Lib.git
+[submodule "controller/Common-Lib"]
+	path = controller/Common-Lib
+	url = https://github.com/Schmorbonium/Common-Lib.git
