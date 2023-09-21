@@ -151,11 +151,6 @@ int main(void)
       index++;
     }
     /* USER CODE END WHILE */
-    if(bufUart2.getInputSize() >= 8){
-      uint8_t buffer[8];
-      bufUart2.takeFromInbox(buffer,8);
-      bufUart2.send(buffer,8);
-    }
 
     /* USER CODE BEGIN 3 */
   }
