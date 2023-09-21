@@ -4,6 +4,7 @@
 	url = git@github.com:Schmorbonium/Common-Lib.git
 [submodule "memIo/Common-Lib"]
 	path = memIo/Common-Lib
+	url = https://github.com/Schmorbonium/Common-Lib.git
 [submodule "DaisyUartTestBluePill/Common-Lib"]
 	path = DaisyUartTestBluePill/Common-Lib
 	url = https://github.com/Schmorbonium/Common-Lib.git
