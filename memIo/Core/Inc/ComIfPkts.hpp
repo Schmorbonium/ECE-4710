@@ -260,106 +260,106 @@ public:
 
 
 
-class Payload : public PacketField
-{
-protected:
-    uint16_t dataLen = 0;
-    FullWordField *HeapData;
+// class Payload : public PacketField
+// {
+// protected:
+//     uint16_t dataLen = 0;
+//     FullWordField *HeapData;
 
-public:
-    Payload() {}
-    Payload(uint8_t length)
-    {
-        dataLen = length;
-        HeapData = new FullWordField[dataLen];
-    }
+// public:
+//     Payload() {}
+//     Payload(uint8_t length)
+//     {
+//         dataLen = length;
+//         HeapData = new FullWordField[dataLen];
+//     }
 
-    ~Payload()
-    {
-        delete HeapData;
-    }
+//     ~Payload()
+//     {
+//         delete HeapData;
+//     }
 
-    /// @brief This Pulling a packet out of the que implicitly calls whatever action is associated with the packet.
-    /// @param que This is Isaac's amazing char buffer the definitely does not leak memory.
-    virtual void parseFromQue(CharBuffer *que)
-    {
-        for (uint8_t i = 0; i < dataLen; i++)
-        {
-            HeapData[i] = FullWordField(que);
-        }
-    }
+//     /// @brief This Pulling a packet out of the que implicitly calls whatever action is associated with the packet.
+//     /// @param que This is Isaac's amazing char buffer the definitely does not leak memory.
+//     virtual void parseFromQue(CharBuffer *que)
+//     {
+//         for (uint8_t i = 0; i < dataLen; i++)
+//         {
+//             HeapData[i] = FullWordField(que);
+//         }
+//     }
 
-    /// @brief This add this packets data to the end of the sending que
-    /// @param que This is Isaac's amazing char buffer the definitely does not leak memory.
-    virtual void appendToQue(CharBuffer *que)
-    {
-        for (uint8_t i = 0; i < dataLen; i++)
-        {
-            HeapData[i].appendToQue(que);
-        }
-    }
-    /// @brief This Appends a response for this packet to the given que. By default it is simply this header with the response flag set and no data.
-    virtual void appendResponseToQue(CharBuffer *que)
-    {
-    }
-};
+//     /// @brief This add this packets data to the end of the sending que
+//     /// @param que This is Isaac's amazing char buffer the definitely does not leak memory.
+//     virtual void appendToQue(CharBuffer *que)
+//     {
+//         for (uint8_t i = 0; i < dataLen; i++)
+//         {
+//             HeapData[i].appendToQue(que);
+//         }
+//     }
+//     /// @brief This Appends a response for this packet to the given que. By default it is simply this header with the response flag set and no data.
+//     virtual void appendResponseToQue(CharBuffer *que)
+//     {
+//     }
+// };
 
-class LedOp : Payload
-{
-protected:
-public:
-    LedOp(CharBuffer *que) : Payload(1)
-    {
-    }
+// class LedOp : Payload
+// {
+// protected:
+// public:
+//     LedOp(CharBuffer *que) : Payload(1)
+//     {
+//     }
 
-    virtual void parseFromQue(CharBuffer *que)
-    {
-        for (uint8_t i = 0; i < dataLen; i++)
-        {
-            HeapData[i] = FullWordField(que);
-        }
-    }
+//     virtual void parseFromQue(CharBuffer *que)
+//     {
+//         for (uint8_t i = 0; i < dataLen; i++)
+//         {
+//             HeapData[i] = FullWordField(que);
+//         }
+//     }
 
-    virtual void appendToQue(CharBuffer *que)
-    {
-        for (uint8_t i = 0; i < dataLen; i++)
-        {
-            HeapData[i].appendToQue(que);
-        }
-    }
-};
+//     virtual void appendToQue(CharBuffer *que)
+//     {
+//         for (uint8_t i = 0; i < dataLen; i++)
+//         {
+//             HeapData[i].appendToQue(que);
+//         }
+//     }
+// };
 
-class MemOp : public Payload
-{
-protected:
-public:
-    MemOp(CharBuffer *que, uint8_t dataLen) : Payload(dataLen)
-    {
-        parseFromQue(que);
-    }
-    MemAddr_t getStartAddr()
-    {
-        return HeapData[0].data;
-    }
-};
+// class MemOp : public Payload
+// {
+// protected:
+// public:
+//     MemOp(CharBuffer *que, uint8_t dataLen) : Payload(dataLen)
+//     {
+//         parseFromQue(que);
+//     }
+//     MemAddr_t getStartAddr()
+//     {
+//         return HeapData[0].data;
+//     }
+// };
 
-class MemoryOp : ComIfPkt
-{
-};
+// class MemoryOp : ComIfPkt
+// {
+// };
 
-class LedOp : ComIfPkt
-{
-    LedOp(CharBuffer *que)
-    {
-        parseFromQue(que);
-    }
-    virtual void parseFromQue(CharBuffer *que)
-    {
-        header.parseFromQue(que);
-        payload = new Payload(1);
-        payload->parseFromQue(que);
-        payload->getWord()
-    }
-};
+// class LedOp : ComIfPkt
+// {
+//     LedOp(CharBuffer *que)
+//     {
+//         parseFromQue(que);
+//     }
+//     virtual void parseFromQue(CharBuffer *que)
+//     {
+//         header.parseFromQue(que);
+//         payload = new Payload(1);
+//         payload->parseFromQue(que);
+//         payload->getWord()
+//     }
+// };
 
 #endif //__COM_IF_PKT__
