@@ -75,6 +75,8 @@ void Error_Handler(void);
 #define LED_CLK_GPIO_Port GPIOA
 #define LED_LATCH_Pin GPIO_PIN_7
 #define LED_LATCH_GPIO_Port GPIOA
+#define LED_BLANK_Pin GPIO_PIN_0
+#define LED_BLANK_GPIO_Port GPIOB
 #define IBC_TX_Pin GPIO_PIN_9
 #define IBC_TX_GPIO_Port GPIOA
 #define IBC_RX_Pin GPIO_PIN_10
