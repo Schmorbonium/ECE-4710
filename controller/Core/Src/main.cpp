@@ -60,9 +60,6 @@ static void MX_NVIC_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 extern UART_HandleTypeDef huart1;
-extern UART_HandleTypeDef huart2;
-BufferedUart bufUart1(&huart1);
-BufferedUart bufUart2(&huart2);
 /* USER CODE END 0 */
 
 /**
@@ -105,11 +102,9 @@ int main(void)
   // char string[] = "hello World!";
   // bufUart2.send((uint8_t*)&string,12);
 
-  ShiftReg shifter((uint16_t)3, LED_CLK_GPIO_Port, LED_CLK_Pin, LED_LATCH_GPIO_Port, LED_LATCH_Pin, LED_DATA_GPIO_Port, LED_DATA_Pin);
+  ShiftReg shifter((uint16_t)1, LED_CLK_GPIO_Port, LED_CLK_Pin, LED_LATCH_GPIO_Port, LED_LATCH_Pin, LED_DATA_GPIO_Port, LED_DATA_Pin);
 
   shifter.setChipMask(0, 0x0000);
-  shifter.setChipMask(1, 0x0000);
-  shifter.setChipMask(2, 0x0000);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -120,11 +115,11 @@ int main(void)
     __disable_irq();
     shifter.asyncUpdate();
     __enable_irq();
-    // HAL_Delay(1);
-    for (volatile size_t i = 0; i < 1000; i++)
-    {
-      /* code */
-    }
+    HAL_Delay(1);
+    // for (volatile size_t i = 0; i < 1000; i++)
+    // {
+    //   /* code */
+    // }
     
     if (!shifter.busy())
     {
@@ -135,18 +130,12 @@ int main(void)
       if (index == 0)
       {
         shifter.resetBit(0, 15);
-        shifter.resetBit(1, 15);
-        shifter.resetBit(2, 15);
       }
       else
       {
         shifter.resetBit(0, index - 1);
-        shifter.resetBit(1, index - 1);
-        shifter.resetBit(2, index - 1);
       }
       shifter.setBit(0, index);
-      shifter.setBit(1, index);
-      shifter.setBit(2, index);
       index++;
     }
     /* USER CODE END WHILE */
