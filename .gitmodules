@@ -13,3 +13,6 @@
 [submodule "controller/Common-Lib"]
 	path = controller/Common-Lib
 	url = https://github.com/Schmorbonium/Common-Lib.git
+[submodule "alu/Common-Lib"]
+	path = alu/Common-Lib
+	url = https://github.com/Schmorbonium/Common-Lib.git
