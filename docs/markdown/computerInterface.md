@@ -3,7 +3,7 @@ All communication between the computer and IO/Memory will be documented here
 
 
 <hr></hr>
-<div class="PacketDoc" id="Computer_interface" data-sub_pkt="header"> </div>
+<div class="PacketDoc" id="Computer_Interface" data-sub_pkt="header"> </div>
 <hr></hr>
 
 Operations
