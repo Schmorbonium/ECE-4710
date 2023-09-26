@@ -5,7 +5,7 @@
 #include "bufferedUart.hpp"
 #include "charBuffer.hpp"
 
-enum cmdID
+enum CmdID
 {
     noOp = 0x0,
     rstPkt = 0x1,
@@ -20,7 +20,8 @@ enum cmdID
     dbStep = 0x17,
     dbGetBP = 0x18,
     dbTogBP = 0x19,
-    dbTogDB = 0x1A
+    dbTogDB = 0x1A,
+    ledOp = 0x21,
 };
 
 enum StatusEnum
@@ -42,7 +43,7 @@ enum HeaderFlag
     isCool = 0x4
 };
 
-// ------------------------ Primitive fields ---------------------------------- 
+// ------------------------ Primitive fields ----------------------------------
 class PacketField
 {
 protected:
@@ -118,7 +119,7 @@ public:
     }
 };
 
-// ------------------------ Complex fields ---------------------------------- 
+// ------------------------ Complex fields ----------------------------------
 class StringField : public PacketField
 {
 protected:
@@ -184,9 +185,9 @@ protected:
     FlagField flags;
 
 public:
-    Header(cmdID cmd, uint8_t dataSize, HeaderFlagSet flags) : cmd(cmd),
-                                                         dataLen(dataSize),
-                                                         flags(flags) {}
+    Header(CmdID cmd, uint8_t dataSize, HeaderFlagSet flags) : cmd(cmd),
+                                                               dataLen(dataSize),
+                                                               flags(flags) {}
     Header(CharBuffer *que);
     virtual void parseFromQue(CharBuffer *que);
     virtual void appendToQue(CharBuffer *que);
@@ -219,30 +220,31 @@ public:
     StatusFeild(StatusEnum status,
                 char *msg,
                 uint16_t len) : status(status),
-                                 msg(msg, len) {}
+                                msg(msg, len) {}
 
-    StatusFeild(CharBuffer *que): status(que),
-                                 msg(que) {}
-    virtual void parseFromQue(CharBuffer *que) { 
+    StatusFeild(CharBuffer *que) : status(que),
+                                   msg(que) {}
+    virtual void parseFromQue(CharBuffer *que)
+    {
         status = uint16_field(que);
         msg = StringField(que);
-     }
-    virtual void appendToQue(CharBuffer *que) { 
+    }
+    virtual void appendToQue(CharBuffer *que)
+    {
         status.appendToQue(que);
         msg.appendToQue(que);
     }
-
 };
 
-// ------------------------ CompletePackets ---------------------------------- 
+// ------------------------ CompletePackets ----------------------------------
 class ComIfPkt
 {
 protected:
     Header header;
 
 public:
-    ComIfPkt(CharBuffer* que): header(que){}
-    ComIfPkt(CharBuffer* que): header(noOp,0,noFlags){}
+    ComIfPkt(CharBuffer *que) : header(que) {}
+    ComIfPkt(CmdID cmdId, HeaderFlagSet flags) : header(cmdId, 0, flags) {}
 
     virtual void parseFromQue(CharBuffer *que) {}
     virtual void appendToQue(CharBuffer *que) {}
@@ -251,115 +253,152 @@ public:
     static bool ParseFullPkt(CharBuffer *que);
 };
 
-
-
-
-
-
-
-
-
-
-class Payload : public PacketField
+enum LEDop_Enum
 {
-protected:
-    uint16_t dataLen = 0;
-    FullWordField *HeapData;
+    set = 0x1,
+    reset = 0x2,
+    setReset = 0x3,
 
-public:
-    Payload() {}
-    Payload(uint8_t length)
-    {
-        dataLen = length;
-        HeapData = new FullWordField[dataLen];
-    }
-
-    ~Payload()
-    {
-        delete HeapData;
-    }
-
-    /// @brief This Pulling a packet out of the que implicitly calls whatever action is associated with the packet.
-    /// @param que This is Isaac's amazing char buffer the definitely does not leak memory.
-    virtual void parseFromQue(CharBuffer *que)
-    {
-        for (uint8_t i = 0; i < dataLen; i++)
-        {
-            HeapData[i] = FullWordField(que);
-        }
-    }
-
-    /// @brief This add this packets data to the end of the sending que
-    /// @param que This is Isaac's amazing char buffer the definitely does not leak memory.
-    virtual void appendToQue(CharBuffer *que)
-    {
-        for (uint8_t i = 0; i < dataLen; i++)
-        {
-            HeapData[i].appendToQue(que);
-        }
-    }
-    /// @brief This Appends a response for this packet to the given que. By default it is simply this header with the response flag set and no data.
-    virtual void appendResponseToQue(CharBuffer *que)
-    {
-    }
+    clearAll = 0x11,
+    setAll = 0x12
 };
 
-class LedOp : Payload
+class LedOpPkt
 {
 protected:
+    Header header;
+    uint16_field operation;
+    uint16_field mask[3];
+
+    void executeOp()
+    {
+    }
+
 public:
-    LedOp(CharBuffer *que) : Payload(1)
+    LedOpPkt(CharBuffer *que) : header(que),
+                                operation(que),
+                                mask({uint16_field(que),
+                                      uint16_field(que),
+                                      uint16_field(que)})
+    {
+        executeOp();
+    }
+    LedOpPkt(LEDop_Enum operation,
+             uint16_t mask[3]) : header(ledOp, 8, noOp),
+                                 operation(operation),
+                                 mask({uint16_field(mask[0]),
+                                       uint16_field(mask[1]),
+                                       uint16_field(mask[2])})
     {
     }
 
     virtual void parseFromQue(CharBuffer *que)
     {
-        for (uint8_t i = 0; i < dataLen; i++)
-        {
-            HeapData[i] = FullWordField(que);
-        }
+        executeOp();
     }
-
-    virtual void appendToQue(CharBuffer *que)
-    {
-        for (uint8_t i = 0; i < dataLen; i++)
-        {
-            HeapData[i].appendToQue(que);
-        }
-    }
+    virtual void appendToQue(CharBuffer *que) {}
 };
 
-class MemOp : public Payload
-{
-protected:
-public:
-    MemOp(CharBuffer *que, uint8_t dataLen) : Payload(dataLen)
-    {
-        parseFromQue(que);
-    }
-    MemAddr_t getStartAddr()
-    {
-        return HeapData[0].data;
-    }
-};
+// class Payload : public PacketField
+// {
+// protected:
+//     uint16_t dataLen = 0;
+//     FullWordField *HeapData;
 
-class MemoryOp : ComIfPkt
-{
-};
+// public:
+//     Payload() {}
+//     Payload(uint8_t length)
+//     {
+//         dataLen = length;
+//         HeapData = new FullWordField[dataLen];
+//     }
 
-class LedOp : ComIfPkt
-{
-    LedOp(CharBuffer *que)
-    {
-        parseFromQue(que);
-    }
-    virtual void parseFromQue(CharBuffer *que)
-    {
-        header.parseFromQue(que);
-        payload = new Payload(1);
-        payload->parseFromQue(que);
-        payload->getWord()
-    }
-};
+//     ~Payload()
+//     {
+//         delete HeapData;
+//     }
+
+//     /// @brief This Pulling a packet out of the que implicitly calls whatever action is associated with the packet.
+//     /// @param que This is Isaac's amazing char buffer the definitely does not leak memory.
+//     virtual void parseFromQue(CharBuffer *que)
+//     {
+//         for (uint8_t i = 0; i < dataLen; i++)
+//         {
+//             HeapData[i] = FullWordField(que);
+//         }
+//     }
+
+//     /// @brief This add this packets data to the end of the sending que
+//     /// @param que This is Isaac's amazing char buffer the definitely does not leak memory.
+//     virtual void appendToQue(CharBuffer *que)
+//     {
+//         for (uint8_t i = 0; i < dataLen; i++)
+//         {
+//             HeapData[i].appendToQue(que);
+//         }
+//     }
+//     /// @brief This Appends a response for this packet to the given que. By default it is simply this header with the response flag set and no data.
+//     virtual void appendResponseToQue(CharBuffer *que)
+//     {
+//     }
+// };
+
+// class LedOp : Payload
+// {
+// protected:
+// public:
+//     LedOp(CharBuffer *que) : Payload(1)
+//     {
+//     }
+
+//     virtual void parseFromQue(CharBuffer *que)
+//     {
+//         for (uint8_t i = 0; i < dataLen; i++)
+//         {
+//             HeapData[i] = FullWordField(que);
+//         }
+//     }
+
+//     virtual void appendToQue(CharBuffer *que)
+//     {
+//         for (uint8_t i = 0; i < dataLen; i++)
+//         {
+//             HeapData[i].appendToQue(que);
+//         }
+//     }
+// };
+
+// class MemOp : public Payload
+// {
+// protected:
+// public:
+//     MemOp(CharBuffer *que, uint8_t dataLen) : Payload(dataLen)
+//     {
+//         parseFromQue(que);
+//     }
+//     MemAddr_t getStartAddr()
+//     {
+//         return HeapData[0].data;
+//     }
+// };
+
+// class MemoryOp : ComIfPkt
+// {
+// };
+
+// class LedOp : ComIfPkt
+// {
+//     LedOp(CharBuffer *que)
+//     {
+//         parseFromQue(que);
+//     }
+//     virtual void parseFromQue(CharBuffer *que)
+//     {
+//         header.parseFromQue(que);
+//         payload = new Payload(1);
+//         payload->parseFromQue(que);
+//         payload->getWord()
+//     }
+// };
 
 #endif //__COM_IF_PKT__
