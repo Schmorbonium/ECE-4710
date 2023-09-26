@@ -60,6 +60,7 @@ function generateTable(jsonData) {
 
 function generatePktEnumTable(options) {
     const table = document.createElement('table')
+    table.className = "packetTable"
     {
         const tHead = document.createElement('thead')
         table.appendChild(tHead)

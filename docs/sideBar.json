@@ -18,10 +18,10 @@
         "ref":"intraBoardDoc.md"
     },
     {
-        "text":"Test",
-        "key":"test",
+        "text":"Parts Used",
+        "key":"partDoc",
         "type":"markDown",
-        "ref":"Test.md"
+        "ref":"ledDropValues.md"
     },
     {
         "text":"Peer Review V1",

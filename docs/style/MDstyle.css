@@ -106,12 +106,12 @@ th:nth-child(even) {
   margin-left: 20px;
 }
 
-.td a:hover {
+.packetTable a:hover {
   color: var(--darkContrast);
   text-decoration: inherit;
 }
 
-.td a {
+.packetTable a {
   color: inherit;
   text-decoration: inherit;
 }
