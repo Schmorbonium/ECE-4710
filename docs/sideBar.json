@@ -28,5 +28,11 @@
         "key":"pr1",
         "type":"markDown",
         "ref":"peerReview.md"
+    },
+    {
+        "text":"Peer Review V2",
+        "key":"pr2",
+        "type":"markDown",
+        "ref":"peerReview2.md"
     }
 ]
