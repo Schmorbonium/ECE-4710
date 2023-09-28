@@ -1,7 +1,7 @@
 # Peer Review Preparation Checklist
 - [ ] Ground planes on top and bottom
 - [ ] All silkscreen part labels (in tName layer) do not overlap anything
-- [ ] Every part is labeled (resistance, capacitance, pin connection, etc.) (in tName or bName layer)
+- [ ] Every part is labeled (resistance, capacitance, pin connection, etc.) (in tName or bName layer) (JLC recommends 40mil as smallest)
 - [ ] Identifier label for which board and which version
 - [ ] JLC-PCB DRC has been run, no remaining errors or warnings [DRU File](https://github.com/JLCPCB/jlcpcb-eagle/blob/master/design%20rules/jlcpcb-2layers.dru)
 
@@ -42,10 +42,23 @@ Open for review
 
 # RegisterFile
 ## Status
-Unfinished
+Open for review
 ## FeedBack
 
-## Order Prep Checklist
+# Revision 2 Changes for All Boards
+- [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
+- [x] Disconnected current sense potentiometer from 3V3 rail
+- [x] Ensure LED drivers are powered by 5V rail
+- [x] Reimport potentiometer library for new model with proper pads
+- [x] Add LEDs (and current limiting resistors, see (Alex's calculations)[https://schmorbonium.github.io/ECE-4710/?ActivePage=partDoc]) on power rails
+- [x] Add mounting holes
+
+# Peer Review Preparation Checklist
+- [x] Ground planes on top and bottom
+- [x] All *important* silkscreen part labels (in tName layer) do not overlap anything (aka I'm not moving every LED label)
+- [x] Every part is labeled (resistance, capacitance, pin connection, etc.) (in tName or bName layer)
+- [x] Identifier label for which board and which version
+- [x] JLC-PCB DRC has been run, no remaining errors or warnings [DRU File](https://github.com/JLCPCB/jlcpcb-eagle/blob/master/design%20rules/jlcpcb-2layers.dru)
 
 
 
