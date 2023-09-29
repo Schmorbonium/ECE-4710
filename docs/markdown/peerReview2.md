@@ -15,10 +15,22 @@
 
 # Mem-IO
 ## Status
-Unfinished
+Open for review
 ## FeedBack
 
+## General Changes in rev2
+- [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
+- [x] Ensure LED drivers are powered by 5V rail (I need the 3.3 rail anyway)
+- [x] Reimport potentiometer library for new model with proper pads(Pot free)
+- [x] Add LEDs (and current limiting resistors, see [Alex's calculations](https://schmorbonium.github.io/ECE-4710/?ActivePage=partDoc)) on power rails
+- [x] Add mounting holes
+
 ## Order Prep Checklist
+- [x] Ground planes on top and bottom
+- [x] All silkscreen part labels (in tName layer) do not overlap anything
+- [x] Every part is labeled (resistance, capacitance, pin connection, etc.)
+- [x] Identifier label for which board and which version
+- [x] JLC-PCB DRC has been run, no remaining errors or warnings [DRU File](https://github.com/JLCPCB/jlcpcb-eagle/blob/master/design%20rules/jlcpcb-2layers.dru)
 
 # ALU
 ## Status
