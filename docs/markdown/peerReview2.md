@@ -19,8 +19,11 @@ Open for review
 ## FeedBack
 
 - I'm not sure your mounting holes are correct. The only measure I can get f360 to show is a 2.2mm radius, but I think that's only referring to the yellow circle. Also, it doesn't appear to electrically connect to the GND plane
+  - Resolved
 - Can't really put a mounting standoff through a blue pill
+  - Resolved
 - Power LEDs are missing labels
+  - Resolved
 
 ## General Changes in rev2
 - [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
