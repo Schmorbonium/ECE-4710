@@ -101,3 +101,11 @@ Request Feedback
 - [x] Reimport potentiometer library for new model with proper pads
 - [x] Add LEDs (and current limiting resistors, see (Alex's calculations)[https://schmorbonium.github.io/ECE-4710/?ActivePage=partDoc]) on power rails
 - [x] Add mounting holes
+
+## SilkScreen Layers
+
+All standard layers
+tNames
+tPlace
+bNames
+bPlace
