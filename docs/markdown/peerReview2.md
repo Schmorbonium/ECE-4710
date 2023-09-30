@@ -28,6 +28,7 @@ Open for review
 - Did you mean to put your new voltage regulator on top of the silk screen rectangle to represent memory space?
 - Revision label is out of date
 - Please add intended LCD Display to BoM
+- Please address and update all issues on Github
 
 ## General Changes in rev2
 - [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
