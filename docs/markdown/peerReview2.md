@@ -19,11 +19,15 @@ Open for review
 ## FeedBack
 
 - I'm not sure your mounting holes are correct. The only measure I can get f360 to show is a 2.2mm radius, but I think that's only referring to the yellow circle. Also, it doesn't appear to electrically connect to the GND plane
-  - Resolved
+    - Resolved
 - Can't really put a mounting standoff through a blue pill
-  - Resolved
+    - Resolved
 - Power LEDs are missing labels
-  - Resolved
+    - Resolved
+- `LED_DATA`, `LED_CLK` are not connected to blue pill. To follow recommendation of connecting to SPI port, these should be connected to PB15 and PB13, respectively
+- Did you mean to put your new voltage regulator on top of the silk screen rectangle to represent memory space?
+- Revision label is out of date
+- Please add intended LCD Display to BoM
 
 ## General Changes in rev2
 - [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
