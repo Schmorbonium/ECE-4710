@@ -30,11 +30,13 @@ Open for review
   - Yeah Its a tight fit :( 
 - Revision label is out of date
   - Fixed
+    - Do not see Revision labeling update on board. AG
 - Please add intended LCD Display to BoM
   - *sigh* fine
 - Please address and update all issues on Github
   - Classic sprint work flow
-
+- Recommend labels for which pins correspond to which connections on pin headers.
+- Recommend defining legend for what LEDs correspond to Which signal. Alternatives to on-Board Labels recommended
 
 ## General Changes in rev2
 - [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
