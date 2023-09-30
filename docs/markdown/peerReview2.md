@@ -55,6 +55,10 @@ Open for review
 Open for review
 ## FeedBack
 
+- Recommend you add labels for what a given LED represents when illuminated.
+- Add labels for which Power LED represents which Voltage rail
+- Recommend Labels for which pins on a SPI/RS232/Power lead go to which rail.
+
 ## General Changes in rev2
 - [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
 - [x] Disconnected current sense potentiometer from 3V3 rail
@@ -74,6 +78,10 @@ Open for review
 ## Status
 Open for review
 ## FeedBack
+
+- Recommend you add labels for what a given LED represents when illuminated.
+- Recommend Labels for which pins on a SPI/RS232/Power lead go to which rail.
+- Add Resistance values on R1, R2, R5, R6
 
 # Revision 2 Changes for All Boards
 - [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
