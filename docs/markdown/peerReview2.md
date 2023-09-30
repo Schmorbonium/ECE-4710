@@ -89,8 +89,11 @@ Open for review
 ## FeedBack
 
 - Recommend you add labels for what a given LED represents when illuminated.
+    - Resolved
 - Recommend Labels for which pins on a SPI/RS232/Power lead go to which rail.
+    - Resolved
 - Add Resistance values on R1, R2, R5, R6
+    - Agreed to leave blank on purpose due to undecided value
 
 # Revision 2 Changes for All Boards
 - [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
@@ -109,12 +112,14 @@ Open for review
 
 ## Silkscreen
 
-Please include layer 200 bmp with the default tName and tPlace for the top silkscreen
+Please include layer 200 bmp with the default 25 tNames and 21 tPlace for the top silkscreen
 
 
 # Controller
 ## Status
-Feedback Addressed.
+
+Reviewed by Daniel
+
 ## FeedBack
 
 - Power LEDs are missing labels
