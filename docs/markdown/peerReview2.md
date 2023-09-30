@@ -32,6 +32,9 @@ Open for review
   - Fixed
 - Please add intended LCD Display to BoM
   - *sigh* fine
+- Please address and update all issues on Github
+  - Classic sprint work flow
+
 
 ## General Changes in rev2
 - [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
