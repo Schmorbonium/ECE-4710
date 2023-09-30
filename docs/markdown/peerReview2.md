@@ -25,16 +25,16 @@ Open for review
 - Power LEDs are missing labels
     - Resolved
 - `LED_DATA`, `LED_CLK` are not connected to blue pill. To follow recommendation of connecting to SPI port, these should be connected to PB15 and PB13, respectively
-  - Good catch, I would have hated to do another rework wire
+    - Good catch, I would have hated to do another rework wire
 - Did you mean to put your new voltage regulator on top of the silk screen rectangle to represent memory space?
-  - Yeah Its a tight fit :( 
+    - Yeah Its a tight fit :( 
 - Revision label is out of date
-  - Fixed
-    - Do not see Revision labeling update on board. AG
+    - Fixed
+        - Do not see Revision labeling update on board. AG
 - Please add intended LCD Display to BoM
-  - *sigh* fine
+    - *sigh* fine
 - Please address and update all issues on Github
-  - Classic sprint work flow
+    - Classic sprint work flow
 - Recommend labels for which pins correspond to which connections on pin headers.
 - Recommend defining legend for what LEDs correspond to Which signal. Alternatives to on-Board Labels recommended
 
@@ -58,8 +58,11 @@ Open for review
 ## FeedBack
 
 - Recommend you add labels for what a given LED represents when illuminated.
+    - Resolved
 - Add labels for which Power LED represents which Voltage rail
+    - I genuinely though I already had done this
 - Recommend Labels for which pins on a SPI/RS232/Power lead go to which rail.
+    - Resolved
 
 ## General Changes in rev2
 - [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
@@ -75,6 +78,10 @@ Open for review
 - [x] Every part is labeled (resistance, capacitance, pin connection, etc.)
 - [x] Identifier label for which board and which version
 - [x] JLC-PCB DRC has been run, no remaining errors or warnings [DRU File](https://github.com/JLCPCB/jlcpcb-eagle/blob/master/design%20rules/jlcpcb-2layers.dru)
+
+## Silkscreen Layers
+
+Layers 21 tPlace, 25 tNames, and 27 tValues belong on the top silkscreen
 
 # RegisterFile
 ## Status
