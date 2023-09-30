@@ -25,9 +25,13 @@ Open for review
 - Power LEDs are missing labels
     - Resolved
 - `LED_DATA`, `LED_CLK` are not connected to blue pill. To follow recommendation of connecting to SPI port, these should be connected to PB15 and PB13, respectively
+  - Good catch, I would have hated to do another rework wire
 - Did you mean to put your new voltage regulator on top of the silk screen rectangle to represent memory space?
+  - Yeah Its a tight fit :( 
 - Revision label is out of date
+  - Fixed
 - Please add intended LCD Display to BoM
+  - *sigh* fine
 
 ## General Changes in rev2
 - [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
