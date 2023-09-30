@@ -97,10 +97,11 @@ Please include layer 200 bmp with the default tName and tPlace for the top silks
 
 # Controller
 ## Status
-Request Feedback
+Feedback Addressed.
 ## FeedBack
 
 - Power LEDs are missing labels
+  - Addressed, Resolved
 
 ## Order Prep Checklist
 ### Peer Review Preparation Checklist
