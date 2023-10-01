@@ -67,7 +67,8 @@ void handlePacket(uint8_t id, uint8_t len, uint8_t* data) {
     case 2:
         dat = *((uint16_t*)data);
         break;
-    case 4:
+    //case 4:
+    default:
         dat = *((uint32_t*)data);
         break;
     }
@@ -110,25 +111,12 @@ int main(void) {
     MX_GPIO_Init();
     MX_USART1_UART_Init();
     /* USER CODE BEGIN 2 */
-      // HAL_UART_RegisterCallback(&huart1, HAL_UART_TX_COMPLETE_CB_ID, &HAL_UART_TxCpltCallback);
-      // NVIC_EnableIRQ(USART1_IRQn);
-      // HAL_UART_RegisterCallback(&huart1, HAL_UART_RX_COMPLETE_CB_ID, &HAL_UART_RxCpltCallback);
-
-
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
-    // HAL_UART_Receive_IT(&huart1, &incoming_byte, 1);
     initIbc(&huart1, &handlePacket, 0x1);
-    // uint32_t lastTick = HAL_GetTick();
     while (1) {
-        // char* data = "Hello World\n";
-        // if (HAL_GetTick() - lastTick >= 1000) {
-        //     HAL_UART_Transmit_IT(&huart1, data, 12);
-        //     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-        //     lastTick = HAL_GetTick();
-        // }
         processIbcInbox();
         /* USER CODE END WHILE */
 

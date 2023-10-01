@@ -36,7 +36,6 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
-Core/Src/main.c \
 Core/Src/stm32f1xx_hal_msp.c \
 Core/Src/stm32f1xx_it.c \
 Core/Src/system_stm32f1xx.c \
@@ -62,7 +61,8 @@ Common-Lib/Src/bufferedUart.cpp \
 Common-Lib/Src/gpioObj.cpp \
 Common-Lib/Src/ibc.cpp \
 Common-Lib/Src/ibcHandler.cpp \
-Common-Lib/Src/ibcPacket.cpp
+Common-Lib/Src/ibcPacket.cpp \
+build/main.cpp
 
 
 # ASM sources
@@ -217,7 +217,7 @@ $(BUILD_DIR)/%.o: %.S STM32Make.make | $(BUILD_DIR)
 	$(AS) -c $(CFLAGS) $< -o $@
 
 $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) STM32Make.make
-	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+	$(CXX) $(OBJECTS) $(LDFLAGS) -o $@
 	$(SZ) $@
 
 $(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
