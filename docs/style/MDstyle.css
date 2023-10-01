@@ -3,6 +3,7 @@
   --offDark: #383838;
   --midDark: #888888;
   --darkContrast: aqua;
+  --darkerContrast: rgb(0, 68, 255);
   --textColor: white;
   --sideWidth: 150px;
 }
@@ -86,6 +87,16 @@ th:nth-child(even) {
   text-decoration: none;
 }
 
+.sidebar a:hover {
+  color: var(--darkContrast);
+  text-decoration: inherit;
+}
+
+.sidebar a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 .mainPage {
   margin-left: var(--sideWidth);
   padding: 20px;
@@ -95,12 +106,22 @@ th:nth-child(even) {
   margin-left: 20px;
 }
 
-a:hover {
+.packetTable a:hover {
   color: var(--darkContrast);
   text-decoration: inherit;
 }
 
-a {
+.packetTable a {
   color: inherit;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: var(--darkerContrast);
+  text-decoration: inherit;
+}
+
+a {
+  color: var(--darkContrast);;
   text-decoration: inherit;
 }

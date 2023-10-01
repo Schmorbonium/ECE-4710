@@ -1,7 +1,7 @@
 
 [submodule "Common-Lib"]
 	path = Common-Lib
-	url = git@github.com:Schmorbonium/Common-Lib.git
+	url = https://github.com/Schmorbonium/Common-Lib.git
 [submodule "memIo/Common-Lib"]
 	path = memIo/Common-Lib
 	url = https://github.com/Schmorbonium/Common-Lib.git
@@ -11,3 +11,15 @@
 [submodule "DaisyUartTestDisco/Common-Lib"]
 	path = DaisyUartTestDisco/Common-Lib
 	url = https://github.com/Schmorbonium/Common-Lib.git
+<<<<<<< HEAD
+=======
+[submodule "controller/Common-Lib"]
+	path = controller/Common-Lib
+	url = https://github.com/Schmorbonium/Common-Lib.git
+[submodule "alu/Common-Lib"]
+	path = alu/Common-Lib
+	url = https://github.com/Schmorbonium/Common-Lib.git
+[submodule "regFile/Common-Lib"]
+	path = regFile/Common-Lib
+	url = https://github.com/Schmorbonium/Common-Lib.git
+>>>>>>> main

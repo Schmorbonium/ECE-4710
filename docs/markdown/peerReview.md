@@ -1,5 +1,8 @@
 # Peer Review Preparation Checklist
 - [ ] Ground planes on top and bottom
+- [ ] (ADDITION) Connect PB13 (timer 1, channel 1) to LED Driver BLANK signal for PWM brightness software control
+    - Optionally also use PB14, PB15 (timer 1, channels 2 and 3), or PA15 (timer 2, channel 1) for other PWM signals
+- [ ] (ADDITION) Add mounting holes
 - [ ] All silkscreen part labels (in tName layer) do not overlap anything
 - [ ] Every part is labeled (resistance, capacitance, pin connection, etc.)
 - [ ] Identifier label for which board and which version

@@ -1,27 +1,38 @@
 [
     {
         "text":"General",
+        "key":"gen",
         "type":"markDown",
         "ref":"general.md"
     },
     {
         "text":"Computer Interface",
+        "key":"com_if",
         "type":"markDown",
         "ref":"computerInterface.md"
     },
     {
         "text":"Intra-Board Interface",
+        "key":"ibi",
         "type":"markDown",
         "ref":"intraBoardDoc.md"
     },
     {
-        "text":"Test",
+        "text":"Parts Used",
+        "key":"partDoc",
         "type":"markDown",
-        "ref":"Test.md"
+        "ref":"ledDropValues.md"
     },
     {
         "text":"Peer Review V1",
+        "key":"pr1",
         "type":"markDown",
         "ref":"peerReview.md"
+    },
+    {
+        "text":"Peer Review V2",
+        "key":"pr2",
+        "type":"markDown",
+        "ref":"peerReview2.md"
     }
 ]
