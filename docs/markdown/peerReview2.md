@@ -36,7 +36,9 @@ Open for review
 - Please address and update all issues on Github
     - Classic sprint work flow
 - Recommend labels for which pins correspond to which connections on pin headers.
+  - Done
 - Recommend defining legend for what LEDs correspond to Which signal. Alternatives to on-Board Labels recommended
+  - :done:
 
 ## General Changes in rev2
 - [x] Move `TLC_BLANK` to PWM capable pin (PB13 for timer 1, channel 1)
