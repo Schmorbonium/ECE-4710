@@ -26,6 +26,8 @@
 extern "C" {
 #endif
 
+// #define __BLUE_PILL
+#define __DISCO
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_hal.h"
 
@@ -61,6 +63,8 @@ void Error_Handler(void);
 #define LED1_GPIO_Port GPIOC
 #define LED2_Pin GPIO_PIN_7
 #define LED2_GPIO_Port GPIOC
+#define LED3_Pin GPIO_PIN_8
+#define LED3_GPIO_Port GPIOC
 #define LED4_Pin GPIO_PIN_9
 #define LED4_GPIO_Port GPIOC
 

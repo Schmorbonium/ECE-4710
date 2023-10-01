@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "ibc.h"
 
 /* USER CODE END Includes */
 
@@ -50,31 +51,35 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
+void handlePacket(uint8_t id, uint8_t len, uint8_t* data);
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-uint8_t buf;
-uint8_t longbuf[50];
-uint32_t count = 0;
-
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
-    // HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-}
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
-    if (buf == '\n') {
-        longbuf[count++] = '\n';
-        if (HAL_UART_GetState(&huart1) == HAL_UART_STATE_READY && HAL_UART_Transmit_IT(&huart1, longbuf, count) != HAL_OK) {
-            HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-        }
+void handlePacket(uint8_t id, uint8_t len, uint8_t* data) {
+    uint32_t dat;
+    switch (len) {
+    case 1:
+        dat = *data;
+        break;
+    case 2:
+        dat = *((uint16_t*)data);
+        break;
+    //case 4:
+    default:
+        dat = *((uint32_t*)data);
+        break;
     }
-    else {
-        longbuf[count++] = buf;
+    switch (dat) {
+    case 1:
+        HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+        break;
+    case 2:
+        HAL_GPIO_TogglePin(GLED_GPIO_Port, GLED_Pin);
+        break;
     }
-    HAL_UART_Receive_IT(&huart1, &buf, 1);
 }
 
 /* USER CODE END 0 */
@@ -106,30 +111,20 @@ int main(void) {
     MX_GPIO_Init();
     MX_USART1_UART_Init();
     /* USER CODE BEGIN 2 */
-    HAL_UART_RegisterCallback(&huart1, HAL_UART_TX_COMPLETE_CB_ID, &HAL_UART_TxCpltCallback);
-    NVIC_EnableIRQ(USART1_IRQn);
-    HAL_UART_RegisterCallback(&huart1, HAL_UART_RX_COMPLETE_CB_ID, &HAL_UART_RxCpltCallback);
-
-
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
-    HAL_UART_Receive_IT(&huart1, &buf, 1);
-    uint32_t lastTick = HAL_GetTick();
+    initIbc(&huart1, &handlePacket, 0x1);
     while (1) {
-        char* data = "Hello World\n";
-        if (HAL_GetTick() - lastTick >= 1000) {
-            HAL_UART_Transmit_IT(&huart1, data, 12);
-            // HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
-            lastTick = HAL_GetTick();
-        }
+        processIbcInbox();
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
     }
     /* USER CODE END 3 */
 }
+
 
 /**
   * @brief System Clock Configuration
@@ -209,16 +204,27 @@ static void MX_GPIO_Init(void) {
     /* GPIO Ports Clock Enable */
     __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
 
     /*Configure GPIO pin Output Level */
     HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
 
+    /*Configure GPIO pin Output Level */
+    HAL_GPIO_WritePin(GLED_GPIO_Port, GLED_Pin, GPIO_PIN_RESET);
+
     /*Configure GPIO pin : LED_Pin */
     GPIO_InitStruct.Pin = LED_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
+
+    /*Configure GPIO pin : GLED_Pin */
+    GPIO_InitStruct.Pin = GLED_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GLED_GPIO_Port, &GPIO_InitStruct);
 
 }
 
@@ -232,7 +238,7 @@ static void MX_GPIO_Init(void) {
   */
 void Error_Handler(void) {
     /* USER CODE BEGIN Error_Handler_Debug */
-          /* User can add his own implementation to report the HAL error return state */
+              /* User can add his own implementation to report the HAL error return state */
     __disable_irq();
     while (1)
     {
@@ -250,8 +256,8 @@ void Error_Handler(void) {
   */
 void assert_failed(uint8_t* file, uint32_t line) {
     /* USER CODE BEGIN 6 */
-          /* User can add his own implementation to report the file name and line number,
-             ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-             /* USER CODE END 6 */
+              /* User can add his own implementation to report the file name and line number,
+                 ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+                 /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
