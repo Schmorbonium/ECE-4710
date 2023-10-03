@@ -1,5 +1,5 @@
-# SCMB-1: 3D Breakout
-Alex Guymon, Danial Nelson, Isaac Christensen
+# SCMB-01: 3D Breakout
+Alex Guymon, Daniel Nelson, Isaac Christensen
 
 ## MidTerm Review
 
@@ -7,12 +7,16 @@ Alex Guymon, Danial Nelson, Isaac Christensen
 
 <img src="images/VisualWires.png" alt="Documentation Meme" width="400" style="background-color:White;width:500px;height:500px"/>
 
-4 Separate PCBs each with their functionally implemented on a stm32 microcontrollers. With a serialized connection (defined later) The controllers broadcast the information they "generate" (Ex. Controller with broadcast ALU operation, register select, memory write enable, etc.) 
+4 separate PCBs each with their functionally implemented on STM32 microcontrollers. With a serialized connection (defined later) the controllers broadcast the information they "generate" (e.g. controller with broadcast ALU opcode, regfile the register values, etc.) 
 
 <img src="images/Deadlines.PNG" alt="Documentation Meme" width="400" style="width:550px"/>
 
+<hr/>
+
 ### Hardware Progress
-<!-- Insert The PCB Pictures -->
+
+<img src="images/placedPcbs.jpg" alt="Completion Meme" width="400" style="background-color:White;width:500px;height:500px"/>
+
 General rev 1.0 knowledge: Always have Power Rail LEDs, for debugging. 
 
 Memory IO Board: Blank signal left floating, But for some reason the blank signal would be tied to VCC internally. :( Isaac lost the smallest quartz clock resonator to ever exist So we were not able to test the onboard USB-UART. 
@@ -27,6 +31,11 @@ We cut stencils out of thin Laminator sheets. Using the stencils we applied the 
 
 For Next time: We need to make sure the stencils accommodate the Kerf of the Laser. (Possibly more, Our pads had too much solder so it took quite a bit of clean up to get them working. But they did work in the end.)
 
+<video width="500" controls poster="images/driverDemoPoster.png">
+  <source src="videos/driverDemo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 Revision 2:
 - In the mail, and should arrive soon.
 - Additions
@@ -36,18 +45,29 @@ Revision 2:
   - LED `Blank` signal now on a PWM Channel for LED brightness control
   - All the silk screen layers this time for on board graphics
 
+<hr/>
+
 ### Firmware Progress
+
 Lots of progress on the communication protocol between boards
-- Protocol Defined (Not documented though :) )
+- Protocol Defined, and finally completely ported to C++
+  - Documentation coming soon™
 <!-- TODO: Insert the picture of our board with the chicken scratch docs on the wall -->
 - Common library implemented and and tested.
-- Specific commands (SetPC, SetRegister, AluResult, etc) Not yet implemented. 
+  - Only alerts the main loop to packets flagged for that board, and will silently forward other packets
+
+<video width="600" controls poster="images/ibcDemoPoster.png">
+  <source src="videos/ibcDemo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 Lots of progress on the Computer-Board Communication protocol
 - Protocol developed
 - Just about ready to test
 - Memory altering commands over uart. 
   - Should I add data verification? probably, that's a later Isaac problem
+
+<hr/>
 
 ### Software Progress
 Compiler: 
@@ -66,13 +86,17 @@ Web Documentation:
 - Displays markdown on the web page
   - Each Page can be link (Yes that's a new feature, I forgot it when I first wrote the page.....)
   - Special Json parser that take Packet Data encoded in a Json and adds a nice visualization of the data and the data's label and description
+
+<hr/>
   
 <img src="images/Markdown.png" alt="Markdown" width="200"/>
 <!-- ![docs](images/Markdown.png) -->
+
 - Now all we need to do is write the documentation, the easiest part as we all now. 
+
 ![docs](images/Docs2.jpg)
 
-
 Other Memes Isaac wanted to Add but did not have the space :)
+
 <img src="images/docs.webp" alt="Documentation Meme" width="400"/>
 <!-- ![docs](images/docs.webp) -->
