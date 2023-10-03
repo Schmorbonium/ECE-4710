@@ -122,6 +122,10 @@ a:hover {
 }
 
 a {
-  color: var(--darkContrast);;
+  color: var(--darkContrast);
   text-decoration: inherit;
+}
+
+code {
+  color: var(--darkContrast);
 }

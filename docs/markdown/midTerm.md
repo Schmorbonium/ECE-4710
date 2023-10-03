@@ -9,6 +9,8 @@ Alex Guymon, Danial Nelson, Isaac Christensen
 
 4 Separate PCBs each with their functionally implemented on a stm32 microcontrollers. With a serialized connection (defined later) The controllers broadcast the information they "generate" (Ex. Controller with broadcast ALU operation, register select, memory write enable, etc.) 
 
+<img src="images/Deadlines.PNG" alt="Documentation Meme" width="400" style="width:550px"/>
+
 ### Hardware Progress
 <!-- Insert The PCB Pictures -->
 General rev 1.0 knowledge: Always have Power Rail LEDs, for debugging. 
@@ -21,7 +23,7 @@ Controller: We were missing a few labels on the indicator LEDs
 
 <!-- Insert Our PCB assembly Pictures -->
 PCB Assembly: 
-We cut stencils out of thin Laminator sheets. Using the stencils we applied the solder paste, placed our components, then threw it in the oven for 15 minutes. *Bing Bang Boom, we got our selves a ~~cake~~ PCB*
+We cut stencils out of thin Laminator sheets. Using the stencils we applied the solder paste, placed our components, then threw it in the oven for 15 minutes. *Bing Bang Boom, we got our selves a <s>cake</s> PCB*
 
 For Next time: We need to make sure the stencils accommodate the Kerf of the Laser. (Possibly more, Our pads had too much solder so it took quite a bit of clean up to get them working. But they did work in the end.)
 
