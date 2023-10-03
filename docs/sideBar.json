@@ -34,5 +34,11 @@
         "key":"pr2",
         "type":"markDown",
         "ref":"peerReview2.md"
+    },
+    {
+        "text":"Midterm-review",
+        "key":"oof",
+        "type":"markDown",
+        "ref":"midTerm.md"
     }
 ]
