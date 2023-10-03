@@ -1,7 +1,9 @@
+<div style="max-width: 750px">
+
 # SCMB-01: 3D Breakout
 Alex Guymon, Daniel Nelson, Isaac Christensen
 
-## MidTerm Review
+## Midterm Review
 
 ### Small review
 
@@ -17,19 +19,24 @@ Alex Guymon, Daniel Nelson, Isaac Christensen
 
 <img src="images/placedPcbs.jpg" alt="Completion Meme" width="400" style="background-color:White;width:500px;height:500px"/>
 
-General rev 1.0 knowledge: Always have Power Rail LEDs, for debugging. 
+General rev 1.0 knowledge: 
+- Always have Power Rail LEDs, for debugging. 
 
-Memory IO Board: Blank signal left floating, But for some reason the blank signal would be tied to VCC internally. :( Isaac lost the smallest quartz clock resonator to ever exist So we were not able to test the onboard USB-UART. 
+Memory IO Board: 
+- Blank signal left floating, But for some reason the blank signal would be tied to VCC internally. :( 
+- Isaac lost the smallest quartz clock resonator to ever exist so we were not able to test the onboard USB-UART. 
 
-ALU/RegFile: Have to explicitly add layers to the top silkscreen layer. (We were missing our on board design) 
+ALU/RegFile: 
+- Have to explicitly add layers to the top silkscreen layer to relish in the *glory* of Schmorby on a PCB. <img src="images/final_bw_schmorby.bmp" alt="itty bitty schmorby" width="25">(Fusion was rude and defaulted to importing images to a non-silkscreen layer) 
 
-Controller: We were missing a few labels on the indicator LEDs
+Controller: 
+- We were missing a few labels on the indicator LEDs
 
 <!-- Insert Our PCB assembly Pictures -->
 PCB Assembly: 
 We cut stencils out of thin Laminator sheets. Using the stencils we applied the solder paste, placed our components, then threw it in the oven for 15 minutes. *Bing Bang Boom, we got our selves a <s>cake</s> PCB*
 
-For Next time: We need to make sure the stencils accommodate the Kerf of the Laser. (Possibly more, Our pads had too much solder so it took quite a bit of clean up to get them working. But they did work in the end.)
+For Next time: We need to make sure the stencils accommodate the Kerf of the Laser. (Possibly more, our pads had too much solder so it took quite a bit of clean up to get them working. But they did work in the end.)
 
 <video width="500" controls poster="images/driverDemoPoster.png">
   <source src="videos/driverDemo.mp4" type="video/mp4">
@@ -82,7 +89,7 @@ BootLoader:
 - Working on Linux
 - Pending On the Computer Board Communication completion and testing
 
-Web Documentation:
+**Web Documentation**: (*hey look that's this thing!*)
 - Displays markdown on the web page
   - Each Page can be link (Yes that's a new feature, I forgot it when I first wrote the page.....)
   - Special Json parser that take Packet Data encoded in a Json and adds a nice visualization of the data and the data's label and description
@@ -100,3 +107,5 @@ Other Memes Isaac wanted to Add but did not have the space :)
 
 <img src="images/docs.webp" alt="Documentation Meme" width="400"/>
 <!-- ![docs](images/docs.webp) -->
+
+</div>
