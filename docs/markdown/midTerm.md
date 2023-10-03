@@ -57,6 +57,9 @@ Revision 2:
 Lots of progress on the communication protocol between boards
 - Protocol Defined, and finally completely ported to C++
   - Documentation coming soon™
+
+<img src="images/DanielDocs.jpg" alt="QtSim" width="400px"/>
+
 <!-- TODO: Insert the picture of our board with the chicken scratch docs on the wall -->
 - Common library implemented and tested.
   - Only alerts the main loop to packets flagged for that board, and will silently forward other packets
