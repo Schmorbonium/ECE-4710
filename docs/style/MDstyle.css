@@ -6,6 +6,7 @@
   --darkerContrast: rgb(0, 68, 255);
   --textColor: white;
   --sideWidth: 150px;
+  --contentMaxWidth: 750px;
 }
 
 .highlight {
@@ -103,6 +104,15 @@ th:nth-child(even) {
 .mainPage {
   margin-left: var(--sideWidth);
   padding: 20px;
+}
+
+
+.mainPage p{
+  max-width: var(--contentMaxWidth);
+}
+
+.mainPage li{
+  max-width: var(--contentMaxWidth);
 }
 
 .nested {
