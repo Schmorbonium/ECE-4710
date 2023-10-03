@@ -184,30 +184,6 @@ function generateDescriptions(jsonData) {
     return des
 }
 
-const ExpandableHint = "[+]"
-const CollapsibleHint = "[-]"
-function createCollapsibleDiv(label, content) {
-    const div = document.createElement('div')
-    // const LableBox = document.createElement('div')
-    const textIndicator = document.createElement('span')
-    textIndicator.textContent = ExpandableHint
-    textIndicator.style = "margin-left: auto"
-    label.append(textIndicator)
-    label.classList.add("collapsible")
-    label.addEventListener('click', function () {
-        if (content.style.display === 'block') {
-            content.style.display = 'none';
-            textIndicator.textContent = ExpandableHint
-        } else {
-            content.style.display = 'block';
-            textIndicator.textContent = CollapsibleHint
-        }
-    })
-    content.style.display = 'none'
-    div.append(label, content)
-    return div
-}
-
 async function InsertPacketDoc(packDoc) {
     var jsonFilePath = `packetDefs/${packDoc.id}.json`
     try {

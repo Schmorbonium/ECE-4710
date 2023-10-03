@@ -58,6 +58,29 @@ function setUrlVar(variable,value){
     SetUrlValues(localUrlVars)
 }
 
+const ExpandableHint = "[+]"
+const CollapsibleHint = "[-]"
+function createCollapsibleDiv(label, content) {
+    const div = document.createElement('div')
+    const textIndicator = document.createElement('span')
+    textIndicator.textContent = ExpandableHint
+    textIndicator.style = "padding:0px 10px 0px 0px"
+    label.append(textIndicator)
+    label.classList.add("collapsible")
+    label.addEventListener('click', function () {
+        if (content.style.display === 'block') {
+            content.style.display = 'none';
+            textIndicator.textContent = ExpandableHint
+        } else {
+            content.style.display = 'block';
+            textIndicator.textContent = CollapsibleHint
+        }
+    })
+    content.style.display = 'none'
+    div.append(label, content)
+    return div
+}
+
 // let testing = {}
 // testing["Chicken"] = "Tasty"
 // testing["bruh"] = 'bro'
