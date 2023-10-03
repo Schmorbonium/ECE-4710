@@ -3,6 +3,7 @@
     "cortex-debug.openocdPath": "C:\\USERS\\DKNEL\\APPDATA\\ROAMING\\CODE\\USER\\GLOBALSTORAGE\\BMD.STM32-FOR-VSCODE\\@XPACK-DEV-TOOLS\\OPENOCD\\0.12.0-1.1\\.CONTENT\\BIN\\OPENOCD.EXE",
     "cortex-debug.variableUseNaturalFormat": false,
     "files.associations": {
-        "stm32f1xx_hal.h": "c"
+        "stm32f1xx_hal.h": "c",
+        "max7219.h": "c"
     }
 }
