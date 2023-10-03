@@ -107,6 +107,8 @@ th:nth-child(even) {
 
 .nested {
   margin-left: 20px;
+  margin-right: 20px;
+  
 }
 
 .packetTable a:hover {
