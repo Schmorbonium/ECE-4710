@@ -1,5 +1,3 @@
-<div style="max-width: 750px">
-
 # SCMB-01: 3D Breakout
 Alex Guymon, Daniel Nelson, Isaac Christensen
 
@@ -107,5 +105,3 @@ Other Memes Isaac wanted to Add but did not have the space :)
 
 <img src="images/docs.webp" alt="Documentation Meme" width="400"/>
 <!-- ![docs](images/docs.webp) -->
-
-</div>
