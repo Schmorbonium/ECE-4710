@@ -20,8 +20,7 @@ As a prelude to SCMB-1, we constructed a 16-bit ALU entirely from discrete logic
 2. Building a full processor from discrete components would rapidly escalate in costs, both in terms of PCB real estate and component expenditures.
 3. Debugging with discrete components can be intensely challenging.
 
-<img src="images/prototype3.jpg" alt="16b-ALU" width="500"/>
-<!-- ![16b-ALU](images/prototype3.jpg) -->
+![16b-ALU](images/prototype3.jpg)
 image 2
 
 Given these insights, we opted to emulate the RISC-V processor using microcontrollers instead of crafting an entirely original system. This strategic pivot also enables us to prioritize the user's experience, alleviating the complexities of embedding IO into a multifaceted logical assembly.

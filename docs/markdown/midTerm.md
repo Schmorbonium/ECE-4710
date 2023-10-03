@@ -93,10 +93,9 @@ BootLoader:
 - Pending On the Computer Board Communication completion and testing
 
 **Web Documentation**: (*hey look that's this thing!*)
-- Displays markdown on the web page
+- Displays markdown on the web page (Meme 1)
   - Each Page can be link (Yes that's a new feature, I forgot it when I first wrote the page.....)
   - Special Json parser that take Packet Data encoded in a Json and adds a nice visualization of the data and the data's label and description
-
 - Now all we need to do is write the documentation, the easiest part as we all now. (See Meme 2)
 <hr/>
   
