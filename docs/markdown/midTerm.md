@@ -77,6 +77,9 @@ Compiler:
 GUI:
 - Compiled fork of Simulator
 - Start to work on integrating the compiler and the boot loader into the program.
+- Found locations of helper methods to integrate compiler and Bootloader as elements in the program
+- ToDo: Run our specific programs from the button helpers, and ensure C code can be written in the program.
+![QtRvSim running from Linux](images/QtRvSim%20Window.png)
 <!-- TODO: Add some pictures of the simulator -->
 BootLoader:
 - Working on Linux
