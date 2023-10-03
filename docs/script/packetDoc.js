@@ -148,7 +148,7 @@ function getFieldDes(jsonData) {
     }
     const header = document.createElement('h3')
     div.appendChild(header)
-    header.innerText = jsonData.name
+    header.innerText = jsonData.name 
     
     const content = document.createElement('div')
     div.appendChild(content)
@@ -184,14 +184,23 @@ function generateDescriptions(jsonData) {
     return des
 }
 
+const ExpandableHint = "[+]"
+const CollapsibleHint = "[-]"
 function createCollapsibleDiv(label, content) {
     const div = document.createElement('div')
+    // const LableBox = document.createElement('div')
+    const textIndicator = document.createElement('span')
+    textIndicator.textContent = ExpandableHint
+    textIndicator.style = "margin-left: auto"
+    label.append(textIndicator)
     label.classList.add("collapsible")
     label.addEventListener('click', function () {
         if (content.style.display === 'block') {
             content.style.display = 'none';
+            textIndicator.textContent = ExpandableHint
         } else {
             content.style.display = 'block';
+            textIndicator.textContent = CollapsibleHint
         }
     })
     content.style.display = 'none'

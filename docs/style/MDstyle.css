@@ -22,6 +22,9 @@
   outline: none;
   font-size: 18px;
   transition: 0.4s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 hr {
