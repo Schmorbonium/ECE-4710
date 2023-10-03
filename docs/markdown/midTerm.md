@@ -97,16 +97,17 @@ BootLoader:
   - Each Page can be link (Yes that's a new feature, I forgot it when I first wrote the page.....)
   - Special Json parser that take Packet Data encoded in a Json and adds a nice visualization of the data and the data's label and description
 
+- Now all we need to do is write the documentation, the easiest part as we all now. (See Meme 2)
 <hr/>
   
+
+# Meme 1
 <img src="images/Markdown.png" alt="Markdown" width="200"/>
 <!-- ![docs](images/Markdown.png) -->
 
-- Now all we need to do is write the documentation, the easiest part as we all now. 
-
+# Meme 2
 ![docs](images/Docs2.jpg)
 
-Other Memes Isaac wanted to Add but did not have the space :)
-
+# Meme 3
 <img src="images/docs.webp" alt="Documentation Meme" width="400"/>
 <!-- ![docs](images/docs.webp) -->
