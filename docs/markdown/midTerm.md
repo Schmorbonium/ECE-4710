@@ -32,7 +32,7 @@ Controller:
 
 <!-- Insert Our PCB assembly Pictures -->
 PCB Assembly: 
-We cut stencils out of thin Laminator sheets. Using the stencils we applied the solder paste, placed our components, then threw it in the oven for 15 minutes. *Bing Bang Boom, we got our selves a <s>cake</s> PCB*
+We cut stencils out of thin laminator sheets. Using the stencils we applied the solder paste, placed our components, then threw it in the oven for 15 minutes. *Bing Bang Boom, we got ourselves a <s>cake</s> PCB*
 
 For Next time: We need to make sure the stencils accommodate the Kerf of the Laser. (Possibly more, our pads had too much solder so it took quite a bit of clean up to get them working. But they did work in the end.)
 
@@ -44,11 +44,11 @@ For Next time: We need to make sure the stencils accommodate the Kerf of the Las
 Revision 2:
 - In the mail, and should arrive soon.
 - Additions
-  - More Labels of the LEDs
-  - small LCD touch Screen on the memory IO Board
-  - Power Indicator Lights
-  - LED `Blank` signal now on a PWM Channel for LED brightness control
-  - All the silk screen layers this time for on board graphics
+  - More labels for the LEDs
+  - Small LCD touch screen on the memory IO board
+  - Power indicator lights on both rails on every board
+  - LED `Blank` signal now on a PWM Channel for proper LED brightness control (and not just current control)
+  - All the silk screen layers this time for "on-board" graphics
 
 <hr/>
 
@@ -58,7 +58,7 @@ Lots of progress on the communication protocol between boards
 - Protocol Defined, and finally completely ported to C++
   - Documentation coming soon™
 <!-- TODO: Insert the picture of our board with the chicken scratch docs on the wall -->
-- Common library implemented and and tested.
+- Common library implemented and tested.
   - Only alerts the main loop to packets flagged for that board, and will silently forward other packets
 
 <video width="600" controls poster="images/ibcDemoPoster.png">
