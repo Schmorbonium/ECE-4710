@@ -59,6 +59,12 @@
                 "key": "pr2",
                 "type": "markDown",
                 "ref": "peerReview2.md"
+            },
+            {
+                "text": "Peer Review V3",
+                "key": "pr3",
+                "type": "markDown",
+                "ref": "peerReview3.md"
             }
         ]
     },
