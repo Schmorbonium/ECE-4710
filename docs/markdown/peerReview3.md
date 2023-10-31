@@ -41,6 +41,9 @@ Layers 21 tPlace, 25 tNames, and 27 tValues belong on the top silkscreen
 
 ## FeedBack
 
+## Board Specific Changes
+- [ ] Redo LED driver fanout
+
 ## Peer Review Preparation Checklist
 - [ ] Ground planes on top and bottom
 - [ ] All *important* silkscreen part labels (in tName layer) do not overlap anything (aka I'm not moving every LED label)
