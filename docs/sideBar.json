@@ -1,38 +1,77 @@
 [
     {
-        "text":"General",
-        "key":"gen",
-        "type":"markDown",
-        "ref":"general.md"
+        "text": "General",
+        "key": "gen",
+        "type": "markDown",
+        "ref": "general.md"
     },
     {
-        "text":"Computer Interface",
-        "key":"com_if",
-        "type":"markDown",
-        "ref":"computerInterface.md"
+        "text": "Part Notes",
+        "key": "parts",
+        "type": "group",
+        "ref": [
+            {
+                "text": "STM32-Notes",
+                "key": "stm32",
+                "type": "markDown",
+                "ref": "stm32Notes.md"
+            },
+            {
+                "text": "LED-Doc",
+                "key": "led",
+                "type": "markDown",
+                "ref": "ledDropValues.md"
+            }
+        ]
     },
     {
-        "text":"Intra-Board Interface",
-        "key":"ibi",
-        "type":"markDown",
-        "ref":"intraBoardDoc.md"
+        "text": "Communication",
+        "key": "comm",
+        "type": "group",
+        "ref": [
+            {
+                "text": "Computer Interface",
+                "key": "com_if",
+                "type": "markDown",
+                "ref": "computerInterface.md"
+            },
+            {
+                "text": "Intra-Board Interface",
+                "key": "ibi",
+                "type": "markDown",
+                "ref": "intraBoardDoc.md"
+            }
+        ]
     },
     {
-        "text":"Parts Used",
-        "key":"partDoc",
-        "type":"markDown",
-        "ref":"ledDropValues.md"
+        "text": "Peer Reviews",
+        "key": "pr",
+        "type": "group",
+        "ref": [
+            {
+                "text": "Peer Review V1",
+                "key": "pr1",
+                "type": "markDown",
+                "ref": "peerReview.md"
+            },
+            {
+                "text": "Peer Review V2",
+                "key": "pr2",
+                "type": "markDown",
+                "ref": "peerReview2.md"
+            },
+            {
+                "text": "Peer Review V3",
+                "key": "pr3",
+                "type": "markDown",
+                "ref": "peerReview3.md"
+            }
+        ]
     },
     {
-        "text":"Peer Review V1",
-        "key":"pr1",
-        "type":"markDown",
-        "ref":"peerReview.md"
-    },
-    {
-        "text":"Peer Review V2",
-        "key":"pr2",
-        "type":"markDown",
-        "ref":"peerReview2.md"
+        "text": "Midterm-review",
+        "key": "oof",
+        "type": "markDown",
+        "ref": "midTerm.md"
     }
 ]

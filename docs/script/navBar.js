@@ -2,24 +2,38 @@ let SideBarLU = {}
 let activeItem = null;
 const urlActivePage = "ActivePage"
 
-function newSidebarItem(Text, type, file, pageKey) {
+function newSidebarItem(Text, type, reference, pageKey) {
     let entry = {}
     entry.type = type;
-    entry.file = file;
     entry.item = document.createElement('li')
-    entry.item.addEventListener("click", function() {
-        selectTab(pageKey)
-    })
     const textArea = document.createElement('a')
-    entry.item.appendChild(textArea)
     textArea.innerText = Text
+    entry.item.appendChild(textArea)
     if(type == "markDown"){
+        entry.ref = reference;
         entry.setActive = function (){
-            setMD(`markdown/${entry.file}`)
+            setMD(`markdown/${entry.ref}`)
         }
+        entry.item.addEventListener("click", function() {
+            selectTab(pageKey)
+        })
+    }else if(type == "group"){
+        submenu = document.createElement('ul')
+        buildMenu(reference, submenu,(pageKey+"/"))
+        entry.item = createCollapsibleDiv(entry.item,submenu)
+        entry.setActive = function (){
+        }
+        // entry.setActive = function (){
+        //     setMD(`markdown/${entry.file}`)
+        // }
+
     }else{
+        // entry.item.appendChild(textArea)
         entry.setActive = function (){
         }
+        entry.item.addEventListener("click", function() {
+            selectTab(pageKey)
+        })
     }
     return entry
 }
@@ -36,6 +50,14 @@ function selectTab(pageKey) {
     }
 }
 
+function buildMenu(jsonData, parent,path=""){
+    jsonData.forEach(element => {
+        let entry = newSidebarItem(element.text, element.type, element.ref,(path+element.key),path)
+        SideBarLU[(path+element.key)] = entry
+        parent.appendChild(entry.item)
+    });
+}
+
 async function buildSidebar() {
     const jsonFilePath = 'sideBar.json'
     const sideBar = document.getElementById('TheSideBar')
@@ -45,11 +67,12 @@ async function buildSidebar() {
             throw new Error('Network response was not ok');
         }
         const json = await response.json();
-        json.forEach(element => {
-            let entry = newSidebarItem(element.text, element.type, element.ref,element.key)
-            SideBarLU[element.key] = entry
-            sideBar.appendChild(entry.item)
-        });
+        buildMenu(json, sideBar)
+        // json.forEach(element => {
+        //     let entry = newSidebarItem(element.text, element.type, element.ref,element.key)
+        //     SideBarLU[element.key] = entry
+        //     sideBar.appendChild(entry.item)
+        // });
     } catch (error) {
         console.error("Error loading JSON:", error);
     }

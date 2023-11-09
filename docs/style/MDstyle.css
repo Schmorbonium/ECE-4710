@@ -5,7 +5,8 @@
   --darkContrast: aqua;
   --darkerContrast: rgb(0, 68, 255);
   --textColor: white;
-  --sideWidth: 150px;
+  --sideWidth: 200px;
+  --contentMaxWidth: 750px;
 }
 
 .highlight {
@@ -22,6 +23,9 @@
   outline: none;
   font-size: 18px;
   transition: 0.4s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 hr {
@@ -102,8 +106,19 @@ th:nth-child(even) {
   padding: 20px;
 }
 
+
+.mainPage p{
+  max-width: var(--contentMaxWidth);
+}
+
+.mainPage li{
+  max-width: var(--contentMaxWidth);
+}
+
 .nested {
   margin-left: 20px;
+  margin-right: 20px;
+  
 }
 
 .packetTable a:hover {
@@ -122,6 +137,10 @@ a:hover {
 }
 
 a {
-  color: var(--darkContrast);;
+  color: var(--darkContrast);
   text-decoration: inherit;
+}
+
+code {
+  color: var(--darkContrast);
 }

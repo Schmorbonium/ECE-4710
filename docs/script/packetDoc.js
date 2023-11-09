@@ -148,7 +148,7 @@ function getFieldDes(jsonData) {
     }
     const header = document.createElement('h3')
     div.appendChild(header)
-    header.innerText = jsonData.name
+    header.innerText = jsonData.name 
     
     const content = document.createElement('div')
     div.appendChild(content)
@@ -182,21 +182,6 @@ function generateDescriptions(jsonData) {
         des.appendChild(getFieldDes(element))
     });
     return des
-}
-
-function createCollapsibleDiv(label, content) {
-    const div = document.createElement('div')
-    label.classList.add("collapsible")
-    label.addEventListener('click', function () {
-        if (content.style.display === 'block') {
-            content.style.display = 'none';
-        } else {
-            content.style.display = 'block';
-        }
-    })
-    content.style.display = 'none'
-    div.append(label, content)
-    return div
 }
 
 async function InsertPacketDoc(packDoc) {
