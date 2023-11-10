@@ -40,6 +40,12 @@
                 "key": "ibi",
                 "type": "markDown",
                 "ref": "intraBoardDoc.md"
+            },
+            {
+                "text": "GUI-Interface Wishlist",
+                "key": "interfacewishlist",
+                "type": "markDown",
+                "ref": "interfaceWishlist.md"
             }
         ]
     },
