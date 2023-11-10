@@ -27,14 +27,22 @@
 # ALU
 ## Status
 
+Open for review
+
 ## FeedBack
 
+
+## Board Specific Changes
+- [x] Add 2 new LED drivers and associated LEDs for illustrating paths
+- [x] Add to silkscreen for clarity of dataflow
+- [x] Move LED_BLANK to `PA11`
+
 ## Order Prep Checklist
-- [ ] Ground planes on top and bottom
-- [ ] All silkscreen part labels (in tName layer) do not overlap anything
-- [ ] Every part is labeled (resistance, capacitance, pin connection, etc.)
-- [ ] Identifier label for which board and which version
-- [ ] JLC-PCB DRC has been run, no remaining errors or warnings [DRU File](https://github.com/JLCPCB/jlcpcb-eagle/blob/master/design%20rules/jlcpcb-2layers.dru)
+- [x] Ground planes on top and bottom
+- [x] All silkscreen part labels (in tName layer) do not overlap anything
+- [x] Every part is labeled (resistance, capacitance, pin connection, etc.)
+- [x] Identifier label for which board and which version
+- [x] JLC-PCB DRC has been run, no remaining errors or warnings [DRU File](https://github.com/JLCPCB/jlcpcb-eagle/blob/master/design%20rules/jlcpcb-2layers.dru)
 
 ## Silkscreen Layers
 
@@ -50,8 +58,7 @@ Open for review
 ## FeedBack
 
 ## Board Specific Changes
-- [ ] Redo LED driver fanout (Chance of happening dependent on other work that needs to be done)
-- [x] Move LED_BLANK to `PB11`
+- [x] Move LED_BLANK to `PA11`
 
 ## Peer Review Preparation Checklist
 - [x] Ground planes on top and bottom
