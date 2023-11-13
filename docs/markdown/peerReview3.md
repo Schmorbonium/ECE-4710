@@ -24,6 +24,22 @@
 
 <hr />
 
+# GPU
+## Status
+
+Ready for review
+
+## FeedBack
+
+## Order Prep Checklist
+- [x] Ground planes on top and bottom
+- [x] All silkscreen part labels (in tName layer) do not overlap anything
+- [x] Every part is labeled (resistance, capacitance, pin connection, etc.)
+- [x] Identifier label for which board and which version
+- [x] JLC-PCB DRC has been run, no remaining errors or warnings [DRU File](https://github.com/JLCPCB/jlcpcb-eagle/blob/master/design%20rules/jlcpcb-2layers.dru)
+
+<hr />
+
 # ALU
 ## Status
 
@@ -65,7 +81,7 @@ Open for review
 - [x] All *important* silkscreen part labels (in tName layer) do not overlap anything (aka I'm not moving every LED label)
 - [x] Every part is labeled (resistance, capacitance, pin connection, etc.) (in tName or bName layer)
 - [x] Identifier label for which board and which version
-- [ ] JLC-PCB DRC has been run, no remaining errors or warnings [DRU File](https://github.com/JLCPCB/jlcpcb-eagle/blob/master/design%20rules/jlcpcb-2layers.dru)
+- [x] JLC-PCB DRC has been run, no remaining errors or warnings [DRU File](https://github.com/JLCPCB/jlcpcb-eagle/blob/master/design%20rules/jlcpcb-2layers.dru)
 
 ## Silkscreen
 
@@ -79,6 +95,9 @@ Please include layer 200 bmp with the default 25 tNames and 21 tPlace for the to
 Ready for Review
 
 ## FeedBack
+
+- Silkscreen still says rev 2
+- Your silkscreen now has the least detail of any board. Is there anything you could add, or organize the LEDs into groups of related functions that would make their purpose more obvious to random person who approaches our project?
 
 ## Peer Review Preparation Checklist
 - [ ] Ground planes on top and bottom
