@@ -15,4 +15,4 @@ The order was placed a little behind (Monday, instead of last Friday) due to las
 
 We have a display that we are driving over SPI. But a display is *actually, kind of*, a **lot** of data. So, Isaac decided that it would be best to add a 5th board for specifically driving the display.
 
-<img src="images/Screen.jpg" alt="Screen!" width="400" style="background-color:White;width:500px;height:500px"/>
+<img src="images/Screen.jpg" alt="Screen!" width="400" style="background-color:White"/>
