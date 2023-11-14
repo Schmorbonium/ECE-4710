@@ -79,5 +79,11 @@
         "key": "oof",
         "type": "markDown",
         "ref": "midTerm.md"
+    },
+    {
+        "text": "November Review",
+        "key": "november",
+        "type": "markDown",
+        "ref": "novemberReport.md"
     }
 ]
