@@ -13,6 +13,8 @@
 # Mem-IO
 ## Status
 
+Approved by Daniel
+
 ## FeedBack
 
 ## Order Prep Checklist
@@ -27,7 +29,7 @@
 # GPU
 ## Status
 
-Ready for review
+Approved by Daniel
 
 ## FeedBack
 
@@ -92,7 +94,7 @@ Please include layer 200 bmp with the default 25 tNames and 21 tPlace for the to
 # Controller
 ## Status
 
-Comments reviewed
+Approved by Daniel
 
 ## FeedBack
 
