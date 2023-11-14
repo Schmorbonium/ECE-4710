@@ -16,3 +16,7 @@ The order was placed a little behind (Monday, instead of last Friday) due to las
 We have a display that we are driving over SPI. But a display is *actually, kind of*, a **lot** of data. So, Isaac decided that it would be best to add a 5th board for specifically driving the display.
 
 <img src="images/Screen.jpg" alt="Screen!" width="400" style="background-color:White"/>
+
+## LED Wrappers Everywhere
+
+Each board now has a wrapper around the LED library that Isaac wrote for specifically controlling the LEDs from the perspective of how they are configured. For example, the register file can set specific register numbers, the controller specific control wires, or highlighting specific MUX inputs. This makes developing for the boards easier.
