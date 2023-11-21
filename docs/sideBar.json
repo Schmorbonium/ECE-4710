@@ -21,6 +21,12 @@
                 "key": "led",
                 "type": "markDown",
                 "ref": "ledDropValues.md"
+            },
+            {
+                "text": "Stencil Creation",
+                "key": "stencil",
+                "type": "markDown",
+                "ref": "stencils.md"
             }
         ]
     },
