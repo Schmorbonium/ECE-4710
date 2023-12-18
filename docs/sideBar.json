@@ -6,6 +6,12 @@
         "ref": "general.md"
     },
     {
+        "text": "Meeting Notes",
+        "key": "CatchMeOutSide",
+        "type": "markDown",
+        "ref": "meetingNotes.md"
+    },
+    {
         "text": "Part Notes",
         "key": "parts",
         "type": "group",
